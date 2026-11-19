@@ -298,6 +298,15 @@ blockquote { margin: 10px 0 0; padding: 12px 12px 12px 15px; border-left: 3px so
   .toast { right: 13px; bottom: 13px; left: 13px; text-align: center; }
 }
 
+@media (max-width: 360px) {
+  .sidebar { padding-left: 10px; padding-right: 10px; }
+  .brand-mark { max-width: calc(100vw - 138px); overflow: hidden; font-size: 15px; white-space: nowrap; }
+  .brand-mark span:not(:first-child) { display: none; }
+  .brand-mark span:not(:last-child)::after { content: ''; }
+  .sidebar-nav { gap: 1px; }
+  .nav-item { width: 32px; min-height: 34px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }

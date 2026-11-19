@@ -1,5 +1,6 @@
 export const REFERENCE_DATE = '2026-11-20';
 export const DATA_AS_OF = REFERENCE_DATE;
+export const DEFAULT_FILTERS = { regime: 'DORA', relevance: 'all', status: 'all', dateRange: '90d' };
 
 const bilingual = (zh, en) => ({ zh, en });
 
@@ -204,7 +205,7 @@ export const records = [
     source: bilingual('National regulator', 'National regulator'),
     sourceType: 'reference',
     affectedParty: bilingual('ICT 服务提供商', 'ICT service provider'),
-    status: 'reviewed',
+    status: 'under-review',
     priority: 'low',
     lastUpdate: '2026-09-18',
     publishedAt: '2026-09-18',
@@ -262,7 +263,7 @@ export const records = [
     source: bilingual('EU data policy', 'EU data policy'),
     sourceType: 'reference',
     affectedParty: bilingual('服务提供商', 'Service provider'),
-    status: 'reviewed',
+    status: 'under-review',
     priority: 'low',
     lastUpdate: '2026-07-10',
     publishedAt: '2026-07-10',

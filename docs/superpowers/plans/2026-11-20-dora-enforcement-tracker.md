@@ -114,9 +114,9 @@
 **Interfaces:**
 - The existing Pages workflow remains the deployment contract; source monitoring must update only its snapshot and hand off to the deploy workflow.
 
-- [ ] Add repository hygiene rules and a documented local/remote publish checklist.
-- [ ] Add a regression test for the workflow triggers and the required Pages artifact configuration.
-- [ ] Initialize the local repository only if it is not already one; do not push without a user-supplied remote.
+- [x] Add repository hygiene rules and a documented local/remote publish checklist.
+- [x] Add a regression test for the workflow triggers and the required Pages artifact configuration.
+- [x] Initialize the local repository only if it is not already one; do not push without a user-supplied remote.
 
 ### Extension Task 9: Source registry, update events, and review log
 
@@ -128,9 +128,9 @@
 - `sourceRegistry` exports official source records with `id`, `regime`, `url`, `authority`, `scope`, `status`, and `lastCheckedAt`.
 - `createReviewEntry(recordId, action, at)` returns a serializable review event; `appendReviewEntry(entries, entry, limit)` keeps newest entries first.
 
-- [ ] Keep EBA DORA pages as official monitored sources and represent DGA only as a separate secondary source scope.
-- [ ] Render source status and latest update events in a bilingual panel without auto-promoting legal conclusions.
-- [ ] Persist local review actions and show the selected record's review history.
+- [x] Keep EBA DORA pages as official monitored sources and represent DGA only as a separate secondary source scope.
+- [x] Render source status and latest update events in a bilingual panel without auto-promoting legal conclusions.
+- [x] Persist local review actions and show the selected record's review history.
 
 ### Extension Task 10: Connect delivery effect to actions
 
@@ -143,9 +143,9 @@
 - Existing record fields `owner`, `nextAction`, `dueDate`, and `businessImpact` are visible in the detail/action surfaces.
 - `initialUpdateEvents` is a bilingual, source-linked fallback feed that can be refreshed from `public/data/updates.json`.
 
-- [ ] Show owner beside upcoming actions and in the detail facts.
-- [ ] Add an update-event feed with source link, date, hash-backed status, and human-review disclaimer.
-- [ ] Keep DORA action metrics limited to the two requested relevance values and keep DGA visually separated.
+- [x] Show owner beside upcoming actions and in the detail facts.
+- [x] Add an update-event feed with source link, date, hash-backed status, and human-review disclaimer.
+- [x] Keep DORA action metrics limited to the two requested relevance values and keep DGA visually separated.
 
 ### Extension Task 11: Browser smoke test and dependency security gate
 
@@ -154,15 +154,15 @@
 - Modify: `package.json`, `package-lock.json`, `.github/workflows/deploy.yml`
 - Test: `npm run test:e2e`, `npm audit --omit=dev`, `npm audit`
 
-- [ ] Add Playwright coverage for language switching, DORA filtering, empty state, review flow, source link, and mobile chart fit.
-- [ ] Install/pin Playwright and run the smoke suite against a local Vite server.
-- [ ] Run both production and development dependency audits; remediate safe direct dependency findings or document residual transitive findings.
+- [x] Add Playwright coverage for language switching, DORA filtering, empty state, review flow, source link, and mobile chart fit.
+- [x] Install/pin Playwright and run the smoke suite against a local Vite server.
+- [x] Run both production and development dependency audits; remediate safe direct dependency findings or document residual transitive findings.
 
 ### Extension Task 12: Monitoring regression and final verification
 
 **Files:**
 - Modify: `scripts/check_updates.py`, `tests/test_check_updates.py`, `README.md`, `.superpowers/sdd/2026-11-20-dora-enforcement-tracker/progress.md`
 
-- [ ] Compare a fetched source hash only with that source's latest event, so a genuine revert creates a new update event.
-- [ ] Re-run JavaScript/Python tests, lint, build, Playwright smoke, and inspect the final diff.
-- [ ] Record any external publish blocker separately from the local publish-ready result.
+- [x] Compare a fetched source hash only with that source's latest event, so a genuine revert creates a new update event.
+- [x] Re-run JavaScript/Python tests, lint, build, Playwright smoke, and inspect the final diff.
+- [x] Record any external publish blocker separately from the local publish-ready result.

@@ -29,11 +29,12 @@ jobs:
       - name: Add run summary
         run: |
           echo "## DORA source monitor" >> "$GITHUB_STEP_SUMMARY"
-          echo "Changed: ${{ steps.check.outputs.changed }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Source changes: ${{ steps.check.outputs.changed }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Snapshot changed: ${{ steps.check.outputs.snapshot_changed }}" >> "$GITHUB_STEP_SUMMARY"
           echo "New updates: ${{ steps.check.outputs.new_count }}" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Commit updated snapshot
-        if: steps.check.outputs.changed == 'true'
+        if: steps.check.outputs.snapshot_changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { DATA_AS_OF, REFERENCE_DATE, records, filterRecords, getSummary, getTrend } from './data';
+import { DATA_AS_OF, DEFAULT_FILTERS, REFERENCE_DATE, records, filterRecords, getSummary, getTrend } from './data';
 import { buildCsvContent, buildJsonContent, buildMarkdownContent } from './export';
 import { formatLongDate, getStoredLanguage, LANGUAGE_LABELS, UI } from './copy';
 import { sourceRegistry } from './sourceRegistry';
-import { appendReviewEntry, createReviewEntry, readReviewLog, writeReviewLog } from './reviewLog';
+import { appendReviewEntry, applyReviewEntries, createReviewEntry, readReviewLog, writeReviewLog } from './reviewLog';
 import { initialUpdateEvents, normalizeUpdateEvent } from './updates';
 import {
   DemoNotice,
@@ -18,17 +18,22 @@ import {
   UpcomingActions,
 } from './components';
 
-const initialFilters = { regime: 'all', relevance: 'all', status: 'all', dateRange: '90d' };
+const initialFilters = DEFAULT_FILTERS;
 
 function App() {
   const [filters, setFilters] = useState(initialFilters);
   const [selectedId, setSelectedId] = useState(records[0].id);
-  const [reviewedIds, setReviewedIds] = useState(() => new Set(records.filter((record) => record.reviewed).map((record) => record.id)));
   const [activeNav, setActiveNav] = useState('tracker');
   const [toast, setToast] = useState('');
   const [language, setLanguage] = useState(getStoredLanguage);
   const [reviewEntries, setReviewEntries] = useState(() => readReviewLog());
   const [updateEvents, setUpdateEvents] = useState(initialUpdateEvents);
+  const [sourceCheckedAt, setSourceCheckedAt] = useState(DATA_AS_OF);
+
+  const reviewedIds = useMemo(() => applyReviewEntries(
+    new Set(records.filter((record) => record.reviewed).map((record) => record.id)),
+    reviewEntries,
+  ), [reviewEntries]);
 
   const copy = UI[language];
   const viewRecords = useMemo(() => records.map((record) => ({
@@ -54,8 +59,9 @@ function App() {
     fetch(`${import.meta.env.BASE_URL}data/updates.json`)
       .then((response) => (response.ok ? response.json() : null))
       .then((snapshot) => {
-        if (!active || !snapshot?.items?.length) return;
-        setUpdateEvents(snapshot.items.map(normalizeUpdateEvent));
+        if (!active || !snapshot) return;
+        setSourceCheckedAt(snapshot.last_checked_at || snapshot.updated_at || DATA_AS_OF);
+        if (snapshot.items?.length) setUpdateEvents(snapshot.items.map(normalizeUpdateEvent));
       })
       .catch(() => {
         // Keep the committed fallback feed when the static data endpoint is unavailable.
@@ -80,12 +86,6 @@ function App() {
   function toggleReview() {
     if (!selectedRecord) return;
     const wasReviewed = reviewedIds.has(selectedRecord.id);
-    setReviewedIds((current) => {
-      const next = new Set(current);
-      if (next.has(selectedRecord.id)) next.delete(selectedRecord.id);
-      else next.add(selectedRecord.id);
-      return next;
-    });
     const action = wasReviewed ? 'review-cancelled' : 'marked-reviewed';
     const nextEntries = appendReviewEntry(reviewEntries, createReviewEntry(selectedRecord.id, action));
     setReviewEntries(nextEntries);
@@ -188,7 +188,7 @@ function App() {
             <FilterBar filters={filters} onChange={updateFilter} onReset={resetFilters} language={language} />
             <EvidenceTable items={filteredRecords} selectedId={selectedRecord?.id} onSelect={setSelectedId} language={language} />
             <div className="operations-grid">
-              <SourceRegistryPanel sources={sourceRegistry} language={language} />
+              <SourceRegistryPanel sources={sourceRegistry} lastCheckedAt={sourceCheckedAt} language={language} />
               <UpdateFeed items={updateEvents} language={language} />
             </div>
             <footer className="page-footnote">

@@ -142,12 +142,13 @@ def fetch_source(url: str, timeout: int = 20) -> bytes:
         return response.read()
 
 
-def set_github_outputs(changed: bool, new_items: list[dict[str, Any]]) -> None:
+def set_github_outputs(changed: bool, new_items: list[dict[str, Any]], snapshot_changed: bool) -> None:
     output_path = os.environ.get("GITHUB_OUTPUT")
     if not output_path:
         return
     with open(output_path, "a", encoding="utf-8") as handle:
         handle.write(f"changed={'true' if changed else 'false'}\n")
+        handle.write(f"snapshot_changed={'true' if snapshot_changed else 'false'}\n")
         handle.write(f"new_count={len(new_items)}\n")
         handle.write(f"new_items_json={json.dumps(new_items, ensure_ascii=False)}\n")
 
@@ -173,16 +174,19 @@ def run(data_path: Path = DEFAULT_DATA_PATH, checked_at: str | None = None, time
             print(f"failed: {source['url']} ({exc})", file=sys.stderr)
 
     changed = bool(new_items)
-    if changed:
-        snapshot["items"] = merge_updates(current_items, new_items)
-        snapshot["updated_at"] = checked_at
+    snapshot_changed = changed or snapshot.get("last_checked_at") != checked_at
+    if snapshot_changed:
+        if changed:
+            snapshot["items"] = merge_updates(current_items, new_items)
+            snapshot["updated_at"] = checked_at
+        snapshot["last_checked_at"] = checked_at
         snapshot["source"] = "EBA DORA official pages"
         write_snapshot(data_path, snapshot)
-        print(f"wrote {len(new_items)} update(s) to {data_path}")
+        print(f"wrote snapshot ({len(new_items)} update(s)) to {data_path}")
     else:
         print("no new updates")
 
-    set_github_outputs(changed, new_items)
+    set_github_outputs(changed, new_items, snapshot_changed)
     return monitor_exit_code(failures, len(SOURCES))
 
 

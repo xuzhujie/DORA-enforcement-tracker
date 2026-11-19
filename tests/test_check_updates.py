@@ -1,8 +1,10 @@
 import unittest
 import json
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 from pathlib import Path
 
-from scripts.check_updates import build_update, extract_title, has_changed, merge_updates, monitor_exit_code
+from scripts.check_updates import SOURCES, build_update, content_hash, extract_title, has_changed, merge_updates, monitor_exit_code, run
 
 
 class CheckUpdatesTests(unittest.TestCase):
@@ -11,6 +13,7 @@ class CheckUpdatesTests(unittest.TestCase):
         with snapshot_path.open("r", encoding="utf-8") as handle:
             snapshot = json.load(handle)
         self.assertGreaterEqual(len(snapshot["items"]), 1)
+        self.assertEqual(snapshot["last_checked_at"], "2026-11-20")
 
     def test_extract_title_reads_html_title(self):
         html = b"<html><head><title> EBA DORA oversight </title></head></html>"
@@ -61,6 +64,29 @@ class CheckUpdatesTests(unittest.TestCase):
         self.assertEqual(len(merged), 3)
         self.assertEqual(merged[0]["date"], "2026-11-21")
         self.assertEqual(merged[2]["date"], "2026-11-19")
+
+    def test_run_persists_last_checked_at_without_a_new_content_event(self):
+        content = b"<title>same source</title>"
+        source_hash = content_hash(content)
+        snapshot = {
+            "updated_at": "2026-11-19",
+            "last_checked_at": "2026-11-19",
+            "source": "EBA DORA official pages",
+            "items": [
+                {"link": source["url"], "source_hash": source_hash, "date": "2026-11-19"}
+                for source in SOURCES
+            ],
+        }
+
+        with TemporaryDirectory() as directory:
+            data_path = Path(directory) / "updates.json"
+            data_path.write_text(json.dumps(snapshot), encoding="utf-8")
+            with patch("scripts.check_updates.fetch_source", return_value=content):
+                self.assertEqual(run(data_path=data_path, checked_at="2026-11-20"), 0)
+            written = json.loads(data_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(written["last_checked_at"], "2026-11-20")
+        self.assertEqual(len(written["items"]), 2)
 
     def test_partial_source_failure_fails_the_monitor(self):
         self.assertEqual(monitor_exit_code(0, 2), 0)

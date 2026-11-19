@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import {
   DGA_RELEVANCE_VALUES,
+  DEFAULT_FILTERS,
   DORA_RELEVANCE_VALUES,
   filterRecords,
   getSummary,
@@ -37,6 +38,17 @@ test('DGA relevance stays separate from the DORA set', () => {
   assert.equal(dgaRecords.length, 2);
   assert.ok(dgaRecords.every((record) => DGA_RELEVANCE_VALUES.includes(record.relevance)));
   assert.ok(dgaRecords.every((record) => record.regime !== 'DORA'));
+});
+
+test('default dashboard scope starts with DORA as the primary view', () => {
+  assert.equal(DEFAULT_FILTERS.regime, 'DORA');
+});
+
+test('seeded reviewed records have a recoverable non-reviewed base status', () => {
+  const seededReviewed = records.filter((record) => record.reviewed);
+
+  assert.ok(seededReviewed.length > 0);
+  assert.ok(seededReviewed.every((record) => record.status === 'under-review'));
 });
 
 test('visible record copy is bilingual and labels resolve per language', () => {

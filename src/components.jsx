@@ -157,7 +157,7 @@ export function UpcomingActions({ items, language = 'zh' }) {
   );
 }
 
-export function SourceRegistryPanel({ sources, language = 'zh' }) {
+export function SourceRegistryPanel({ sources, lastCheckedAt, language = 'zh' }) {
   const copy = UI[language].sources;
   return (
     <section className="panel source-registry-panel" id="sources" aria-labelledby="sources-title">
@@ -178,7 +178,7 @@ export function SourceRegistryPanel({ sources, language = 'zh' }) {
               </span>
             </div>
             <p>{text(source.scope, language)}</p>
-            <div className="source-registry-meta"><span>{source.authority}</span><span>{copy.checked} {formatDate(source.lastCheckedAt, language)} · {source.monitorEnabled ? copy.automatic : copy.manual}</span></div>
+            <div className="source-registry-meta"><span>{source.authority}</span><span>{copy.checked} {formatDate(lastCheckedAt || source.lastCheckedAt, language)} · {source.monitorEnabled ? copy.automatic : copy.manual}</span></div>
             <a className="source-registry-link" href={source.url} target="_blank" rel="noreferrer">{copy.open}<Icon name="external" size={13} /></a>
           </article>
         ))}

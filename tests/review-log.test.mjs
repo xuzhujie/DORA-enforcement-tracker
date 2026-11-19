@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { appendReviewEntry, createReviewEntry, readReviewLog } from '../src/reviewLog.js';
+import { appendReviewEntry, applyReviewEntries, createReviewEntry, readReviewLog } from '../src/reviewLog.js';
 
 test('review entries are serializable and newest entries stay first', () => {
   const entry = createReviewEntry('dora-001', 'marked-reviewed', '2026-11-20T10:00:00.000Z');
@@ -21,4 +21,13 @@ test('review log reader safely handles malformed local storage', () => {
   };
 
   assert.deepEqual(readReviewLog(storage), []);
+});
+
+test('review events replay in chronological order to restore current status', () => {
+  const entries = [
+    createReviewEntry('dora-001', 'review-cancelled', '2026-11-22T10:00:00.000Z'),
+    createReviewEntry('dora-001', 'marked-reviewed', '2026-11-21T10:00:00.000Z'),
+  ];
+
+  assert.deepEqual([...applyReviewEntries(new Set(), entries)], []);
 });

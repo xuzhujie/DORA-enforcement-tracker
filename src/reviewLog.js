@@ -15,6 +15,16 @@ export function appendReviewEntry(entries, entry, limit = DEFAULT_LIMIT) {
   return [entry, ...entries].slice(0, limit);
 }
 
+export function applyReviewEntries(initialReviewedIds, entries) {
+  const reviewedIds = new Set(initialReviewedIds);
+  const chronological = [...entries].sort((left, right) => new Date(left.at).getTime() - new Date(right.at).getTime());
+  chronological.forEach((entry) => {
+    if (entry.action === 'marked-reviewed') reviewedIds.add(entry.recordId);
+    if (entry.action === 'review-cancelled') reviewedIds.delete(entry.recordId);
+  });
+  return reviewedIds;
+}
+
 export function readReviewLog(storage = typeof window === 'undefined' ? null : window.localStorage) {
   if (!storage) return [];
   try {
