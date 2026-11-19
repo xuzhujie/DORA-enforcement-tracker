@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DORA Enforcement Tracker · Share snapshot</title>
+    <style>
+      :root { color: #172338; background: #f6f8fb; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #f6f8fb; }
+      a { color: #1f4f98; }
+      .page { max-width: 1180px; margin: 0 auto; padding: 34px 24px 48px; }
+      .hero { display: flex; justify-content: space-between; gap: 24px; padding: 28px 30px; border-radius: 16px; color: #f8fbff; background: #15253f; box-shadow: 0 14px 34px rgba(23, 35, 56, .12); }
+      h1 { margin: 0; font-size: clamp(27px, 4vw, 42px); letter-spacing: -.05em; }
+      .hero p { max-width: 650px; margin: 11px 0 0; color: #cbd8ea; font-size: 13px; line-height: 1.65; }
+      .language { display: flex; align-items: flex-start; gap: 4px; }
+      .language button { min-width: 42px; padding: 8px 10px; border: 1px solid rgba(255,255,255,.28); border-radius: 7px; color: #cbd8ea; background: transparent; cursor: pointer; }
+      .language button.is-active { color: #15253f; background: #fff; }
+      .meta { display: flex; flex-wrap: wrap; gap: 12px 22px; padding: 18px 2px; color: #68758a; font-size: 12px; }
+      .kpis { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid #dfe5ed; border-radius: 12px; background: #fff; overflow: hidden; }
+      .kpi { padding: 20px 22px; }
+      .kpi + .kpi { border-left: 1px solid #ebeff4; }
+      .kpi strong { display: block; color: #14233d; font-size: 34px; line-height: 1; }
+      .kpi span { display: block; margin-top: 8px; color: #68758a; font-size: 12px; }
+      .section { margin-top: 20px; padding: 22px; border: 1px solid #dfe5ed; border-radius: 12px; background: #fff; }
+      .section h2 { margin: 0 0 5px; color: #172338; font-size: 17px; }
+      .section p { margin: 0 0 16px; color: #68758a; font-size: 12px; line-height: 1.6; }
+      .table-wrap { overflow-x: auto; }
+      table { width: 100%; min-width: 760px; border-collapse: collapse; }
+      th { padding: 11px 10px; color: #647187; background: #f3f6f9; font-size: 11px; text-align: left; }
+      td { padding: 13px 10px; border-top: 1px solid #ebeff4; color: #35445b; font-size: 12px; vertical-align: top; }
+      .chip { display: inline-flex; padding: 4px 7px; border-radius: 6px; color: #1e4b8f; background: #e6efff; font-size: 10px; font-weight: 750; }
+      .source { margin-top: 13px; padding: 13px; border-left: 3px solid #1f4f98; border-radius: 0 8px 8px 0; background: #f1f4f7; font-size: 12px; line-height: 1.6; }
+      footer { margin-top: 22px; color: #8792a2; font-size: 11px; line-height: 1.6; }
+      @media (max-width: 650px) { .page { padding: 18px 13px 32px; } .hero { display: block; padding: 22px; } .language { margin-top: 18px; } .kpis { grid-template-columns: 1fr; } .kpi + .kpi { border-top: 1px solid #ebeff4; border-left: 0; } .section { padding: 16px; } }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div>
+          <h1 data-zh="监管执法追踪" data-en="Enforcement tracker">监管执法追踪</h1>
+          <p data-zh="DORA 只聚焦金融客户与关键 ICT 供应链；DGA 仅在数据中介或相关非个人数据出境场景单列。" data-en="DORA focuses on financial customers and the critical ICT supply chain; DGA is separated only for data intermediaries or relevant non-personal data transfers.">DORA 只聚焦金融客户与关键 ICT 供应链；DGA 仅在数据中介或相关非个人数据出境场景单列。</p>
+        </div>
+        <div class="language" aria-label="Language"><button type="button" data-lang="zh" class="is-active">中文</button><button type="button" data-lang="en">EN</button></div>
+      </section>
+      <div class="meta"><span data-zh="演示数据 · 仅用于界面与流程验证" data-en="Demo data · for interface and workflow validation only">演示数据 · 仅用于界面与流程验证</span><span><span data-zh="核验截至" data-en="Verified through">核验截至</span> 2026-11-20</span><a href="https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight" data-zh="EBA DORA 官方监督入口" data-en="EBA DORA official oversight entry point">EBA DORA 官方监督入口</a></div>
+      <section class="kpis" aria-label="Summary metrics">
+        <div class="kpi"><strong>3</strong><span data-zh="待分诊事项" data-en="Open triage">待分诊事项</span></div>
+        <div class="kpi"><strong>3</strong><span data-zh="正在复核" data-en="Under review">正在复核</span></div>
+        <div class="kpi"><strong>6</strong><span data-zh="未来 30 天行动" data-en="Actions in 30 days">未来 30 天行动</span></div>
+      </section>
+      <section class="section">
+        <h2 data-zh="证据记录快照" data-en="Evidence snapshot">证据记录快照</h2>
+        <p data-zh="当前为可打印/可分享的静态快照；完整筛选、导出和详情操作请回到主看板。" data-en="This is a printable/shareable static snapshot; use the main dashboard for filters, exports, and record details.">当前为可打印/可分享的静态快照；完整筛选、导出和详情操作请回到主看板。</p>
+        <div class="table-wrap"><table><thead><tr><th data-zh="规则域" data-en="Regime">规则域</th><th data-zh="主题" data-en="Topic">主题</th><th data-zh="相关性" data-en="Relevance">相关性</th><th data-zh="状态" data-en="Status">状态</th><th data-zh="来源" data-en="Source">来源</th></tr></thead><tbody>
+          <tr><td><span class="chip">DORA</span></td><td data-zh="ICT 第三方风险管理" data-en="ICT third-party risk management">ICT 第三方风险管理</td><td data-zh="金融客户" data-en="Financial customer">金融客户</td><td data-zh="待分诊" data-en="Open triage">待分诊</td><td><a href="https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight">EBA / ESA</a></td></tr>
+          <tr><td><span class="chip">DORA</span></td><td data-zh="关键 ICT 供应链韧性" data-en="Critical ICT supply-chain resilience">关键 ICT 供应链韧性</td><td data-zh="关键 ICT 供应链" data-en="Critical ICT supply chain">关键 ICT 供应链</td><td data-zh="复核中" data-en="Under review">复核中</td><td><a href="https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight">EBA / ESA</a></td></tr>
+          <tr><td><span class="chip">DGA</span></td><td data-zh="数据中介监督" data-en="Data-intermediary oversight">数据中介监督</td><td data-zh="数据中介" data-en="Data intermediary">数据中介</td><td data-zh="待分诊" data-en="Open triage">待分诊</td><td><a href="https://digital-strategy.ec.europa.eu/en/policies/data-governance-act">EU data policy</a></td></tr>
+        </tbody></table></div>
+        <div class="source" data-zh="官方来源入口：EBA DORA 监督页面。静态快照不构成法律意见或实时执法统计。" data-en="Official source entry: EBA DORA oversight page. This static snapshot is not legal advice or real-time enforcement statistics.">官方来源入口：EBA DORA 监督页面。静态快照不构成法律意见或实时执法统计。</div>
+      </section>
+      <footer data-zh="DORA Enforcement Tracker · 仅供研究与流程验证" data-en="DORA Enforcement Tracker · for research and workflow validation only">DORA Enforcement Tracker · 仅供研究与流程验证</footer>
+    </main>
+    <script>
+      const buttons = document.querySelectorAll('[data-lang]');
+      const nodes = document.querySelectorAll('[data-zh][data-en]');
+      function setLanguage(language) {
+        document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
+        nodes.forEach((node) => { node.textContent = node.dataset[language]; });
+        buttons.forEach((button) => button.classList.toggle('is-active', button.dataset.lang === language));
+      }
+      buttons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
+    </script>
+  </body>
+</html>

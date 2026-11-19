@@ -1,0 +1,48 @@
+{
+  "updated_at": "2026-11-20",
+  "source": "DORA enforcement tracker source registry",
+  "items": [
+    {
+      "id": "eba-dora-root",
+      "regime": "DORA",
+      "authority": "EBA / ESA",
+      "name_zh": "EBA DORA 监管入口",
+      "name_en": "EBA DORA regulatory entry point",
+      "url": "https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act",
+      "source_type": "official",
+      "scope_zh": "金融客户与关键 ICT 供应链相关 DORA 监管活动",
+      "scope_en": "DORA activity relevant to financial customers and critical ICT supply chains",
+      "status": "active",
+      "monitor_enabled": true,
+      "last_checked_at": "2026-11-20"
+    },
+    {
+      "id": "eba-dora-oversight",
+      "regime": "DORA",
+      "authority": "EBA / ESA",
+      "name_zh": "EBA DORA 监督入口",
+      "name_en": "EBA DORA oversight entry point",
+      "url": "https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight",
+      "source_type": "official",
+      "scope_zh": "关键 ICT 第三方服务商监督及金融部门韧性风险",
+      "scope_en": "Critical ICT third-party oversight and financial-sector resilience risk",
+      "status": "active",
+      "monitor_enabled": true,
+      "last_checked_at": "2026-11-20"
+    },
+    {
+      "id": "ec-dga-policy",
+      "regime": "DGA",
+      "authority": "European Commission",
+      "name_zh": "欧盟数据治理法政策页",
+      "name_en": "European Data Governance Act policy page",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/data-governance-act",
+      "source_type": "official",
+      "scope_zh": "仅在数据中介或相关非个人数据出境场景单列",
+      "scope_en": "Separate only for data-intermediary or relevant non-personal-data transfer scenarios",
+      "status": "secondary",
+      "monitor_enabled": false,
+      "last_checked_at": "2026-11-20"
+    }
+  ]
+}
