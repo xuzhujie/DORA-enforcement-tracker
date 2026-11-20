@@ -1,6 +1,7 @@
 export const DATASET_STATUSES = ['demo', 'pending-review', 'reviewed'];
 
 const RECORD_STATUSES = ['open', 'under-review', 'reviewed'];
+const PRIORITIES = ['high', 'medium', 'low'];
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 function isBilingual(value) {
@@ -34,8 +35,12 @@ function isValidRecord(record) {
     && typeof record.regime === 'string'
     && typeof record.relevance === 'string'
     && RECORD_STATUSES.includes(record.status)
+    && PRIORITIES.includes(record.priority)
     && isBilingual(record.topic)
     && isBilingual(record.source)
+    && isBilingual(record.affectedParty)
+    && isBilingual(record.summary)
+    && isBilingual(record.evidenceExcerpt)
     && isBilingual(record.businessImpact)
     && isBilingual(record.owner)
     && isBilingual(record.nextAction)

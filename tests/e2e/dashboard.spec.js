@@ -30,12 +30,12 @@ test('upcoming actions expose delivery impact and open the matching detail', asy
   await page.goto('/');
 
   const firstAction = page.locator('.action-row').first();
-  await expect(firstAction).toContainText('确认重大 ICT 事件分类与升级路径是否留痕。');
-  await expect(firstAction).toContainText('影响事件分级、通知时限和客户沟通证据。');
+  await expect(firstAction).toContainText('核对供应商清单、登记信息和替代方案中是否涉及指定 CTPP。');
+  await expect(firstAction).toContainText('需要把 CTPP 线索与供应商登记、集中度评估和退出方案交叉核对。');
   await firstAction.click();
 
-  await expect(page.getByRole('heading', { name: '重大 ICT 事件报告' })).toBeVisible();
-  await expect(page.locator('.detail-panel').getByText('确认重大 ICT 事件分类与升级路径是否留痕。', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '关键 ICT 第三方服务商指定（CTPP）' })).toBeVisible();
+  await expect(page.locator('.detail-panel').getByText('核对供应商清单、登记信息和替代方案中是否涉及指定 CTPP。', { exact: true })).toBeVisible();
 });
 
 test('english upcoming actions keep localized delivery copy and detail', async ({ page }) => {
@@ -43,12 +43,12 @@ test('english upcoming actions keep localized delivery copy and detail', async (
   await page.getByRole('button', { name: 'EN' }).click();
 
   const firstAction = page.locator('.action-row').first();
-  await expect(firstAction).toContainText('Confirm that major ICT incident classification and escalation paths are evidenced.');
-  await expect(firstAction).toContainText('Affects incident severity, notification timelines, and customer-communication evidence.');
+  await expect(firstAction).toContainText('Check whether designated CTPPs appear in the supplier list, register, or exit alternatives.');
+  await expect(firstAction).toContainText('Cross-check the CTPP lead against the supplier register, concentration assessment, and exit plans.');
   await firstAction.click();
 
-  await expect(page.getByRole('heading', { name: 'Major ICT-related incident reporting' })).toBeVisible();
-  await expect(page.locator('.detail-panel').getByText('Confirm that major ICT incident classification and escalation paths are evidenced.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Designation of critical ICT third-party providers (CTPPs)' })).toBeVisible();
+  await expect(page.locator('.detail-panel').getByText('Check whether designated CTPPs appear in the supplier list, register, or exit alternatives.', { exact: true })).toBeVisible();
 });
 
 test('mobile trend chart stays within the viewport', async ({ page }) => {

@@ -24,13 +24,16 @@ test('malformed or empty snapshots fall back to the built-in dataset', () => {
   const malformed = normalizeRecordSnapshot({ dataset_status: 'reviewed', records: 'not-an-array' }, records);
   const empty = normalizeRecordSnapshot({ dataset_status: 'reviewed', records: [] }, records);
   const invalidRecord = normalizeRecordSnapshot({ records: [{ ...records[0], sourceUrl: 'not-a-url' }] }, records);
+  const incompleteRecord = normalizeRecordSnapshot({ records: [{ ...records[0], evidenceExcerpt: null }] }, records);
 
   assert.equal(malformed.records, records);
   assert.equal(empty.records, records);
   assert.equal(invalidRecord.records, records);
+  assert.equal(incompleteRecord.records, records);
   assert.equal(malformed.datasetStatus, 'demo');
   assert.equal(empty.datasetStatus, 'demo');
   assert.equal(invalidRecord.datasetStatus, 'demo');
+  assert.equal(incompleteRecord.datasetStatus, 'demo');
 });
 
 test('unknown dataset statuses are safe and visible as demo', () => {

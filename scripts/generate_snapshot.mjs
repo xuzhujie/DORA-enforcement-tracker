@@ -93,5 +93,5 @@ export async function writeSnapshot({ template = templatePath, output = template
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   await writeSnapshot();
-  console.log(`generated static snapshot from ${records.length} records`);
+  console.log('generated static snapshot from the replaceable records snapshot');
 }

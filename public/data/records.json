@@ -1,383 +1,195 @@
 {
-  "dataset_status": "demo",
+  "dataset_status": "pending-review",
   "as_of": "2026-11-20",
-  "review_gate": "Replace only with a human-reviewed production dataset; this snapshot is not legal advice.",
+  "review_gate": "Official-source extraction prepared; business and legal applicability review is still required. lastUpdate is the tracker preparation/review date, publishedAt is the official source date, and internal due dates are review targets rather than regulatory deadlines.",
   "records": [
     {
-      "id": "dora-001",
+      "id": "dora-ctpp-designation",
       "regime": "DORA",
-      "relevance": "financial-customer",
+      "relevance": "critical-ict-supply-chain",
       "topic": {
-        "zh": "ICT 第三方风险管理",
-        "en": "ICT third-party risk management"
+        "zh": "关键 ICT 第三方服务商指定（CTPP）",
+        "en": "Designation of critical ICT third-party providers (CTPPs)"
       },
       "source": {
-        "zh": "EBA / ESA",
-        "en": "EBA / ESA"
+        "zh": "EBA / EIOPA / ESMA",
+        "en": "EBA / EIOPA / ESMA"
       },
       "sourceType": "official",
       "affectedParty": {
-        "zh": "金融客户",
-        "en": "Financial customers"
+        "zh": "关键 ICT 供应链",
+        "en": "Critical ICT supply chain"
       },
-      "status": "open",
+      "status": "under-review",
       "priority": "high",
-      "lastUpdate": "2026-11-18",
-      "publishedAt": "2026-11-18",
+      "lastUpdate": "2026-11-20",
+      "publishedAt": "2025-11-18",
       "lastVerifiedAt": "2026-11-20",
       "dueDate": "2026-11-26",
-      "sourceUrl": "https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight",
+      "sourceUrl": "https://www.eba.europa.eu/publications-and-media/press-releases/european-supervisory-authorities-designate-critical-ict-third-party-providers-under-digital",
       "summary": {
-        "zh": "跟进金融客户在 ICT 第三方风险管理与韧性安排上的监管动作，重点核对合同控制、监测机制和关键服务依赖。",
-        "en": "Track regulatory activity affecting ICT third-party risk and resilience for financial customers, focusing on contract controls, monitoring, and critical service dependencies."
+        "zh": "ESAs 已发布 DORA 下关键 ICT 第三方服务商的指定结果；当前先作为供应商范围与适用性复核线索，不直接等同于企业的法律结论。",
+        "en": "The ESAs published the DORA designation of critical ICT third-party providers; use it first as a supplier-scope and applicability review lead, not as an automatic legal conclusion for the organisation."
       },
       "evidenceExcerpt": {
-        "zh": "DORA 的监督框架围绕关键 ICT 第三方服务商对金融部门造成的风险展开，并与金融实体自身的 ICT 风险责任并行。",
-        "en": "DORA oversight addresses the risks that critical ICT third-party providers create for the financial sector alongside the ICT risk responsibilities of financial entities."
+        "zh": "官方说明称，指定工作结合金融实体信息登记册与关键性评估，考察系统重要性、对关键或重要功能的支持以及服务可替代性。",
+        "en": "The official release says the designation used registers of information and a criticality assessment covering systemic importance, support for critical or important functions, and substitutability."
       },
       "businessImpact": {
-        "zh": "需要更新第三方风险登记和合同控制证据。",
-        "en": "Refresh the third-party risk register and contract-control evidence."
+        "zh": "需要把 CTPP 线索与供应商登记、集中度评估和退出方案交叉核对。",
+        "en": "Cross-check the CTPP lead against the supplier register, concentration assessment, and exit plans."
       },
       "owner": {
         "zh": "采购 / ICT 风险",
         "en": "Procurement / ICT risk"
       },
       "nextAction": {
-        "zh": "核对关键供应商合同中的监测和退出条款。",
-        "en": "Review monitoring and exit clauses in critical-provider contracts."
+        "zh": "核对供应商清单、登记信息和替代方案中是否涉及指定 CTPP。",
+        "en": "Check whether designated CTPPs appear in the supplier list, register, or exit alternatives."
       },
-      "dataConfidence": "demo",
+      "dataConfidence": "pending-review",
       "reviewed": false
     },
     {
-      "id": "dora-002",
-      "regime": "DORA",
-      "relevance": "critical-ict-supply-chain",
-      "topic": {
-        "zh": "关键 ICT 供应链韧性",
-        "en": "Critical ICT supply-chain resilience"
-      },
-      "source": {
-        "zh": "EBA / ESA",
-        "en": "EBA / ESA"
-      },
-      "sourceType": "official",
-      "affectedParty": {
-        "zh": "关键 ICT 供应链",
-        "en": "Critical ICT supply chain"
-      },
-      "status": "under-review",
-      "priority": "high",
-      "lastUpdate": "2026-11-14",
-      "publishedAt": "2026-11-14",
-      "lastVerifiedAt": "2026-11-20",
-      "dueDate": "2026-12-02",
-      "sourceUrl": "https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight",
-      "summary": {
-        "zh": "评估关键 ICT 供应链在事件响应、业务连续性和集中度风险方面的跟进动作。",
-        "en": "Assess follow-up actions for incident response, business continuity, and concentration risk across the critical ICT supply chain."
-      },
-      "evidenceExcerpt": {
-        "zh": "监督活动关注关键 ICT 第三方服务商的治理与风险管理安排，以及其对金融部门数字韧性的影响。",
-        "en": "Oversight focuses on governance and risk-management arrangements at critical ICT third-party providers and their impact on financial-sector digital resilience."
-      },
-      "businessImpact": {
-        "zh": "可能影响供应商分级、集中度评估和业务连续性测试。",
-        "en": "May affect supplier tiering, concentration assessment, and continuity testing."
-      },
-      "owner": {
-        "zh": "业务连续性 / 采购",
-        "en": "Business continuity / Procurement"
-      },
-      "nextAction": {
-        "zh": "补齐关键 ICT 服务依赖和替代方案证据。",
-        "en": "Complete evidence for critical ICT dependencies and exit alternatives."
-      },
-      "dataConfidence": "demo",
-      "reviewed": false
-    },
-    {
-      "id": "dga-001",
-      "regime": "DGA",
-      "relevance": "data-intermediary",
-      "topic": {
-        "zh": "数据中介监督",
-        "en": "Data-intermediary oversight"
-      },
-      "source": {
-        "zh": "EU data policy",
-        "en": "EU data policy"
-      },
-      "sourceType": "policy",
-      "affectedParty": {
-        "zh": "数据中介",
-        "en": "Data intermediary"
-      },
-      "status": "open",
-      "priority": "medium",
-      "lastUpdate": "2026-11-11",
-      "publishedAt": "2026-11-11",
-      "lastVerifiedAt": "2026-11-20",
-      "dueDate": "2026-11-29",
-      "sourceUrl": "https://digital-strategy.ec.europa.eu/en/policies/data-governance-act",
-      "summary": {
-        "zh": "仅在业务模式涉及数据中介服务时纳入 DGA 线索，核对通知、透明度与跨主体数据共享要求。",
-        "en": "Include a DGA lead only where the business model involves data-intermediary services; check notification, transparency, and cross-party sharing requirements."
-      },
-      "evidenceExcerpt": {
-        "zh": "DGA 相关追踪应聚焦数据中介服务与数据利他机制等具体业务触点，而非泛化为所有数据治理事项。",
-        "en": "DGA tracking should focus on concrete business touchpoints such as data-intermediation services and data altruism, not data governance in general."
-      },
-      "businessImpact": {
-        "zh": "需要确认是否触发数据中介业务的通知与透明度流程。",
-        "en": "Confirm whether data-intermediary notification and transparency processes are triggered."
-      },
-      "owner": {
-        "zh": "数据治理 / 法务",
-        "en": "Data governance / Legal"
-      },
-      "nextAction": {
-        "zh": "确认平台是否为数据中介并记录适用边界。",
-        "en": "Confirm whether the platform is a data intermediary and record the applicability boundary."
-      },
-      "dataConfidence": "demo",
-      "reviewed": false
-    },
-    {
-      "id": "dga-002",
-      "regime": "DGA",
-      "relevance": "non-personal-data-transfer",
-      "topic": {
-        "zh": "非个人数据出境",
-        "en": "Non-personal data transfer"
-      },
-      "source": {
-        "zh": "EU data policy",
-        "en": "EU data policy"
-      },
-      "sourceType": "policy",
-      "affectedParty": {
-        "zh": "非个人数据出境链路",
-        "en": "Non-personal data transfer path"
-      },
-      "status": "under-review",
-      "priority": "medium",
-      "lastUpdate": "2026-10-29",
-      "publishedAt": "2026-10-29",
-      "lastVerifiedAt": "2026-11-20",
-      "dueDate": "2026-12-08",
-      "sourceUrl": "https://digital-strategy.ec.europa.eu/en/policies/data-governance-act",
-      "summary": {
-        "zh": "当业务触及相关非个人数据出境时单列评估，避免把 DGA 事项与个人数据出境或一般数据治理混为一谈。",
-        "en": "Assess separately when the business touches relevant non-personal data transfers; do not mix DGA with personal-data transfers or generic data governance."
-      },
-      "evidenceExcerpt": {
-        "zh": "本条为业务场景标签，用于提示进一步核对适用的非个人数据跨境规则与合同/技术控制。",
-        "en": "This is a business-scenario flag to prompt a review of applicable non-personal-data transfer rules and contractual or technical controls."
-      },
-      "businessImpact": {
-        "zh": "需要把非个人数据流向、合同限制和技术隔离证据归档。",
-        "en": "Archive non-personal data flows, contractual restrictions, and technical-separation evidence."
-      },
-      "owner": {
-        "zh": "数据出境 / 法务",
-        "en": "Data transfers / Legal"
-      },
-      "nextAction": {
-        "zh": "核对相关数据集分类及供应商传输路径。",
-        "en": "Review the classification of relevant datasets and provider transfer paths."
-      },
-      "dataConfidence": "demo",
-      "reviewed": false
-    },
-    {
-      "id": "dora-003",
+      "id": "dora-incident-report-2025",
       "regime": "DORA",
       "relevance": "financial-customer",
       "topic": {
-        "zh": "重大 ICT 事件报告",
-        "en": "Major ICT-related incident reporting"
+        "zh": "2025 年重大 ICT 事件年度报告",
+        "en": "2025 annual overview of major ICT-related incidents"
       },
       "source": {
-        "zh": "EBA / ESA",
-        "en": "EBA / ESA"
+        "zh": "EBA / EIOPA / ESMA",
+        "en": "EBA / EIOPA / ESMA"
       },
       "sourceType": "official",
       "affectedParty": {
         "zh": "金融客户",
         "en": "Financial customers"
       },
-      "status": "open",
+      "status": "under-review",
       "priority": "high",
-      "lastUpdate": "2026-10-07",
-      "publishedAt": "2026-10-07",
+      "lastUpdate": "2026-11-20",
+      "publishedAt": "2026-06-03",
       "lastVerifiedAt": "2026-11-20",
-      "dueDate": "2026-11-24",
+      "dueDate": "2026-11-28",
       "sourceUrl": "https://www.eba.europa.eu/publications-and-media/press-releases/esas-publish-first-report-dora-major-ict-related-incidents",
       "summary": {
-        "zh": "跟进金融客户重大 ICT 事件的分类、报告与补救闭环，重点关注是否触发内部升级和监管沟通。",
-        "en": "Track classification, reporting, and remediation closure for major ICT incidents affecting financial customers, including escalation and regulatory communication."
+        "zh": "ESAs 发布了基于 2025 年数据的首份重大 ICT 事件年度概览；报告为匿名汇总材料，应作为事件分类和韧性复盘的基线，而不是执法案件统计。",
+        "en": "The ESAs published the first annual overview based on 2025 data; it is anonymised and aggregated, so use it as a baseline for incident classification and resilience review rather than as an enforcement-case count."
       },
       "evidenceExcerpt": {
-        "zh": "DORA 的重大 ICT 事件报告机制覆盖对金融实体服务造成不利影响的网络与信息系统事件。",
-        "en": "DORA major ICT incident reporting covers network and information-system incidents that adversely affect services provided to financial entities."
+        "zh": "报告称 2025 年金融部门报告了 3,383 起重大 ICT 事件，约三分之一具有跨境影响；系统故障和外部事件是主要驱动因素。",
+        "en": "The report says 3,383 major ICT-related incidents were reported in 2025, with roughly one third having cross-border impact; system failures and external events were the leading drivers."
       },
       "businessImpact": {
-        "zh": "影响事件分级、通知时限和客户沟通证据。",
-        "en": "Affects incident severity, notification timelines, and customer-communication evidence."
+        "zh": "会影响重大事件分类、监管报告口径、供应商故障复盘和管理层韧性指标。",
+        "en": "This affects major-incident classification, regulatory reporting conventions, provider-failure reviews, and resilience metrics for management."
       },
       "owner": {
         "zh": "安全运营 / 法务",
         "en": "Security operations / Legal"
       },
       "nextAction": {
-        "zh": "确认重大 ICT 事件分类与升级路径是否留痕。",
-        "en": "Confirm that major ICT incident classification and escalation paths are evidenced."
+        "zh": "将年度报告口径与内部事件台账和重大事件分类逐项做差异复核。",
+        "en": "Compare the annual-report definitions with the internal incident log and major-incident classification."
       },
-      "dataConfidence": "demo",
+      "dataConfidence": "pending-review",
       "reviewed": false
     },
     {
-      "id": "other-001",
-      "regime": "Other",
-      "relevance": "other",
-      "topic": {
-        "zh": "ICT 服务提供商合同治理",
-        "en": "ICT service-provider contract governance"
-      },
-      "source": {
-        "zh": "National regulator",
-        "en": "National regulator"
-      },
-      "sourceType": "reference",
-      "affectedParty": {
-        "zh": "ICT 服务提供商",
-        "en": "ICT service provider"
-      },
-      "status": "under-review",
-      "priority": "low",
-      "lastUpdate": "2026-09-18",
-      "publishedAt": "2026-09-18",
-      "lastVerifiedAt": "2026-11-20",
-      "dueDate": null,
-      "sourceUrl": "https://www.eba.europa.eu/regulation-and-policy/operational-resilience",
-      "summary": {
-        "zh": "作为非 DORA 主线事项保留，用于核对一般 ICT 合同治理的审阅边界。",
-        "en": "Retained as a non-DORA line item to clarify the review boundary for general ICT contract governance."
-      },
-      "evidenceExcerpt": {
-        "zh": "该记录用于演示其他规则域的证据归档，不代表 DORA 适用性结论。",
-        "en": "This record demonstrates evidence filing for other regimes and is not a DORA applicability conclusion."
-      },
-      "businessImpact": {
-        "zh": "作为合同治理基线，不直接改变 DORA 主线计数。",
-        "en": "Acts as a contract-governance baseline and does not change the DORA primary count."
-      },
-      "owner": {
-        "zh": "采购",
-        "en": "Procurement"
-      },
-      "nextAction": {
-        "zh": "维持归档，待出现具体规则触点再升级。",
-        "en": "Keep archived and escalate only if a specific regulatory trigger appears."
-      },
-      "dataConfidence": "demo",
-      "reviewed": true
-    },
-    {
-      "id": "dora-004",
+      "id": "dora-incident-instructions-2026",
       "regime": "DORA",
-      "relevance": "critical-ict-supply-chain",
+      "relevance": "financial-customer",
       "topic": {
-        "zh": "韧性测试与整改",
-        "en": "Resilience testing and remediation"
+        "zh": "重大 ICT 事件报告操作指引",
+        "en": "Operational instructions for major ICT incident reporting"
       },
       "source": {
-        "zh": "EBA / ESA",
-        "en": "EBA / ESA"
+        "zh": "EBA / EIOPA / ESMA",
+        "en": "EBA / EIOPA / ESMA"
       },
       "sourceType": "official",
       "affectedParty": {
-        "zh": "关键 ICT 供应链",
-        "en": "Critical ICT supply chain"
+        "zh": "金融客户",
+        "en": "Financial customers"
       },
       "status": "under-review",
-      "priority": "medium",
-      "lastUpdate": "2026-08-22",
-      "publishedAt": "2026-08-22",
+      "priority": "high",
+      "lastUpdate": "2026-09-16",
+      "publishedAt": "2026-09-16",
       "lastVerifiedAt": "2026-11-20",
-      "dueDate": "2026-11-30",
-      "sourceUrl": "https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act",
+      "dueDate": "2026-12-02",
+      "sourceUrl": "https://eba.europa.eu/sites/default/files/2026-09/3039fc09-0b6e-4468-99bb-e27ae88bcf85/DORA%20IR%20-%20Operational%20Instructions_for%20publication%20%281%29.pdf",
       "summary": {
-        "zh": "对关键 ICT 供应链的测试、脆弱性发现和整改证据进行归档，作为供应商尽调的后续输入。",
-        "en": "File testing, vulnerability findings, and remediation evidence for the critical ICT supply chain as follow-up input for supplier diligence."
+        "zh": "ESAs 工作人员发布了用于提升重大 ICT 事件报告质量和一致性的操作指引；文件明确其为 best-efforts 材料，不构成法律解释或 ESAs 的正式立场。",
+        "en": "ESA staff published operational instructions to improve the quality and consistency of major ICT incident reporting; the document expressly describes itself as best-efforts material, not a legal interpretation or formal ESA position."
       },
       "evidenceExcerpt": {
-        "zh": "监督框架包括对关键 ICT 第三方服务商进行信息请求、非现场调查、现场检查以及建议或处罚等工具。",
-        "en": "The oversight framework includes information requests, off-site investigations, on-site inspections, and recommendations or penalties for critical ICT third-party providers."
+        "zh": "指引覆盖报告语言、金额字段、事件唯一标识、最终报告、关键服务受影响标准以及第三方来源信息等数据质量问题。",
+        "en": "The instructions cover data-quality issues including reporting language, monetary fields, unique incident identifiers, final reports, affected critical services, and third-party origin information."
       },
       "businessImpact": {
-        "zh": "会影响测试计划、整改跟踪和供应商复评材料。",
-        "en": "Affects testing plans, remediation tracking, and supplier re-assessment materials."
+        "zh": "需要同步事件上报字段、报告生命周期和证据留痕要求。",
+        "en": "Align incident-reporting fields, report lifecycle controls, and supporting evidence."
       },
       "owner": {
-        "zh": "技术风险 / 采购",
-        "en": "Technology risk / Procurement"
+        "zh": "安全运营 / ICT 风险",
+        "en": "Security operations / ICT risk"
       },
       "nextAction": {
-        "zh": "汇总测试结果与未关闭整改项。",
-        "en": "Consolidate test results and open remediation items."
+        "zh": "对照内部重大 ICT 事件流程，检查 initial、intermediate、final report 的交接留痕。",
+        "en": "Check the handoff evidence for initial, intermediate, and final reports against the internal major-incident process."
       },
-      "dataConfidence": "demo",
+      "dataConfidence": "pending-review",
       "reviewed": false
     },
     {
-      "id": "other-002",
-      "regime": "Other",
-      "relevance": "other",
+      "id": "dora-incident-classification-qna-2026",
+      "regime": "DORA",
+      "relevance": "financial-customer",
       "topic": {
-        "zh": "一般数据治理（归档）",
-        "en": "General data governance (archived)"
+        "zh": "重大事件分类 Q&A：关键服务与未授权访问",
+        "en": "Major-incident classification Q&A: critical services and unauthorised access"
       },
       "source": {
-        "zh": "EU data policy",
-        "en": "EU data policy"
+        "zh": "EBA Single Rulebook Q&A",
+        "en": "EBA Single Rulebook Q&A"
       },
-      "sourceType": "reference",
+      "sourceType": "official",
       "affectedParty": {
-        "zh": "服务提供商",
-        "en": "Service provider"
+        "zh": "金融客户",
+        "en": "Financial customers"
       },
       "status": "under-review",
-      "priority": "low",
-      "lastUpdate": "2026-07-10",
-      "publishedAt": "2026-07-10",
+      "priority": "medium",
+      "lastUpdate": "2026-10-02",
+      "publishedAt": "2026-10-02",
       "lastVerifiedAt": "2026-11-20",
-      "dueDate": null,
-      "sourceUrl": "https://digital-strategy.ec.europa.eu/en/policies/data-governance-act",
+      "dueDate": "2026-12-05",
+      "sourceUrl": "https://eba.europa.eu/single-rule-book-qa/qna/view/publicId/2026_7779",
       "summary": {
-        "zh": "仅作为归档记录存在，不会进入 DORA 或 DGA 的重点计数。",
-        "en": "Retained as an archive record and excluded from the primary DORA or DGA focus count."
+        "zh": "EBA Q&A 说明了经 ICT 第三方路径发生的成功恶意未授权访问如何进入重大事件评估；具体适用仍需结合关键服务和阈值并由法务确认。",
+        "en": "An EBA Q&A explains how successful malicious unauthorised access through an ICT third-party path enters major-incident assessment; application still depends on affected critical services and thresholds and requires legal review."
       },
       "evidenceExcerpt": {
-        "zh": "通用数据治理记录只有在命中数据中介或相关非个人数据出境场景时才应升级为 DGA 线索。",
-        "en": "A general data-governance record should become a DGA lead only when it matches a data-intermediary or relevant non-personal-data transfer scenario."
+        "zh": "Q&A 表明，第三方路径不会自动排除事件评估；当关键服务和相应重大性阈值满足时，可能进入 DORA 重大 ICT 事件判定。",
+        "en": "The Q&A indicates that a third-party path does not automatically exclude assessment; where critical services and the applicable materiality thresholds are met, the event may enter the DORA major-incident analysis."
       },
       "businessImpact": {
-        "zh": "不影响主线计数，仅保留为后续分诊背景。",
-        "en": "Does not affect the primary count; retained as triage context."
+        "zh": "可能影响重大事件判级、第三方通道分析和升级证据。",
+        "en": "This may affect major-incident classification, third-party-path analysis, and escalation evidence."
       },
       "owner": {
-        "zh": "数据治理",
-        "en": "Data governance"
+        "zh": "安全运营 / 法务",
+        "en": "Security operations / Legal"
       },
       "nextAction": {
-        "zh": "保持归档，出现业务触点后再重新分诊。",
-        "en": "Keep archived and re-triage if a business touchpoint appears."
+        "zh": "让法务和安全运营将 Q&A 与现行事件判级规则逐条比对。",
+        "en": "Have Legal and Security Operations compare the Q&A point by point with the current incident-classification rules."
       },
-      "dataConfidence": "demo",
-      "reviewed": true
+      "dataConfidence": "pending-review",
+      "reviewed": false
     }
   ]
 }
