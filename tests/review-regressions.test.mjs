@@ -33,6 +33,7 @@ test('Pages workflow includes the browser smoke gate and repository hygiene exis
 
   assert.match(workflow, /playwright install.*chromium/);
   assert.match(workflow, /npm run test:e2e/);
+  assert.match(workflow, /uses: actions\/configure-pages@v5[\s\S]*?with:[\s\S]*?enablement: false/);
   assert.match(gitignore, /node_modules\//);
   assert.match(gitignore, /dist\//);
 });
