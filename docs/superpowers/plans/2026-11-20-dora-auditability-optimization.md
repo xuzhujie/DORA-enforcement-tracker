@@ -57,4 +57,4 @@
 - [x] Include record type and review context in CSV/JSON/Markdown export.
 - [x] Run `npm run validate:records` in the Pages build before tests/build.
 - [x] Document the PR approval workflow and stale-record handling.
-- [ ] Run the full verification suite, commit, push, and verify Actions/Pages.
+- [x] Run the full verification suite, commit, push, and verify Actions/Pages.
