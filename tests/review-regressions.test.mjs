@@ -10,10 +10,10 @@ test('Vite uses a relative base so the Pages project path can load assets', asyn
 });
 
 test('review action copy matches the status transition', () => {
-  assert.equal(UI.zh.actions.markReview, '标记为已复核');
-  assert.equal(UI.zh.actions.reviewAdded, '已标记为已复核');
-  assert.equal(UI.en.actions.markReview, 'Mark as reviewed');
-  assert.equal(UI.en.actions.reviewAdded, 'Marked as reviewed');
+  assert.equal(UI.zh.actions.markReview, '本地标记为已复核');
+  assert.equal(UI.zh.actions.reviewAdded, '已本地标记复核');
+  assert.equal(UI.en.actions.markReview, 'Mark locally reviewed');
+  assert.equal(UI.en.actions.reviewAdded, 'Marked locally reviewed');
 });
 
 test('filter bar exposes reset copy in both languages', () => {
@@ -33,6 +33,7 @@ test('Pages workflow includes the browser smoke gate and repository hygiene exis
 
   assert.match(workflow, /playwright install.*chromium/);
   assert.match(workflow, /npm run test:e2e/);
+  assert.match(workflow, /npm run validate:records/);
   assert.match(workflow, /uses: actions\/configure-pages@v5[\s\S]*?with:[\s\S]*?enablement: false/);
   assert.match(gitignore, /node_modules\//);
   assert.match(gitignore, /dist\//);

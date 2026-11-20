@@ -1,10 +1,23 @@
 {
   "dataset_status": "pending-review",
   "as_of": "2026-11-20",
-  "review_gate": "Official-source extraction prepared; business and legal applicability review is still required. lastUpdate is the tracker preparation/review date, publishedAt is the official source date, and internal due dates are review targets rather than regulatory deadlines.",
+  "review_gate": {
+    "zh": "官方来源整理已完成；仍需业务与法务复核适用性。lastUpdate 是追踪器整理/复核日期，publishedAt 是官方来源日期，内部行动日期是复核目标，不是监管期限。",
+    "en": "Official-source extraction prepared; business and legal applicability review is still required. lastUpdate is the tracker preparation/review date, publishedAt is the official source date, and internal due dates are review targets rather than regulatory deadlines."
+  },
+  "review": {
+    "decision": "pending",
+    "reviewer": null,
+    "reviewedAt": null,
+    "notes": {
+      "zh": "等待业务与法务复核适用性。",
+      "en": "Awaiting business and legal applicability review."
+    }
+  },
   "records": [
     {
       "id": "dora-ctpp-designation",
+      "recordType": "designation",
       "regime": "DORA",
       "relevance": "critical-ict-supply-chain",
       "topic": {
@@ -52,6 +65,7 @@
     },
     {
       "id": "dora-incident-report-2025",
+      "recordType": "annual-report",
       "regime": "DORA",
       "relevance": "financial-customer",
       "topic": {
@@ -99,6 +113,7 @@
     },
     {
       "id": "dora-incident-instructions-2026",
+      "recordType": "guidance",
       "regime": "DORA",
       "relevance": "financial-customer",
       "topic": {
@@ -146,6 +161,7 @@
     },
     {
       "id": "dora-incident-classification-qna-2026",
+      "recordType": "q-and-a",
       "regime": "DORA",
       "relevance": "financial-customer",
       "topic": {

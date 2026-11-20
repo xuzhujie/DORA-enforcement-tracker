@@ -3,14 +3,20 @@
 import { writeFile } from 'node:fs/promises';
 import { URL } from 'node:url';
 
-import { REFERENCE_DATE, records } from '../src/data.js';
+import { getRecordType, REFERENCE_DATE, records } from '../src/data.js';
 
 export function buildRecordsSnapshot(items = records, asOf = REFERENCE_DATE) {
   return {
     dataset_status: 'demo',
     as_of: asOf,
     review_gate: 'Replace only with a human-reviewed production dataset; this snapshot is not legal advice.',
-    records: items,
+    review: {
+      decision: 'pending',
+      reviewer: null,
+      reviewedAt: null,
+      notes: 'Demo seed; not reviewed.',
+    },
+    records: items.map((item) => ({ ...item, recordType: getRecordType(item) })),
   };
 }
 

@@ -1,6 +1,9 @@
+import { RECORD_TYPE_VALUES } from './recordSnapshot.js';
+
 export const REFERENCE_DATE = '2026-11-20';
 export const DATA_AS_OF = REFERENCE_DATE;
-export const DEFAULT_FILTERS = { regime: 'DORA', relevance: 'all', status: 'all', dateRange: '90d' };
+
+export const DEFAULT_FILTERS = { regime: 'DORA', relevance: 'all', status: 'all', recordType: 'all', dateRange: '90d' };
 
 const bilingual = (zh, en) => ({ zh, en });
 
@@ -41,6 +44,21 @@ export const DATE_OPTIONS = [
   { value: '30d', label: bilingual('近 30 天', 'Last 30 days') },
   { value: 'all', label: bilingual('全部时间', 'All time') },
 ];
+
+export const RECORD_TYPE_OPTIONS = [
+  { value: 'all', label: bilingual('全部记录类型', 'All record types') },
+  { value: 'designation', label: bilingual('指定/名单', 'Designation') },
+  { value: 'annual-report', label: bilingual('年度报告', 'Annual report') },
+  { value: 'guidance', label: bilingual('操作指引', 'Guidance') },
+  { value: 'q-and-a', label: bilingual('Q&A', 'Q&A') },
+  { value: 'enforcement-case', label: bilingual('执法案件', 'Enforcement case') },
+  { value: 'operational-theme', label: bilingual('运营主题', 'Operational theme') },
+  { value: 'other', label: bilingual('其他', 'Other') },
+];
+
+export function getRecordType(record) {
+  return RECORD_TYPE_VALUES.includes(record?.recordType) ? record.recordType : 'operational-theme';
+}
 
 export const TREND_MONTH_LABELS = [
   bilingual('6月', 'Jun'),
@@ -288,24 +306,24 @@ export const records = [
 
 const dateValue = (value) => new Date(`${value}T00:00:00`);
 
-export function filterRecords(items, filters) {
-  const cutoff = filters.dateRange === '30d'
-    ? dateValue('2026-10-21')
-    : filters.dateRange === '90d'
-      ? dateValue('2026-08-22')
-      : null;
+export function filterRecords(items, filters, referenceDate = REFERENCE_DATE) {
+  const cutoff = filters.dateRange === '30d' || filters.dateRange === '90d'
+    ? new Date(`${referenceDate}T00:00:00`)
+    : null;
+  if (cutoff) cutoff.setDate(cutoff.getDate() - (filters.dateRange === '30d' ? 30 : 90));
 
   return items.filter((record) => {
     const matchesRegime = filters.regime === 'all' || record.regime === filters.regime;
     const matchesRelevance = filters.relevance === 'all' || record.relevance === filters.relevance;
     const matchesStatus = filters.status === 'all' || record.status === filters.status;
+    const matchesRecordType = !filters.recordType || filters.recordType === 'all' || getRecordType(record) === filters.recordType;
     const matchesDate = !cutoff || dateValue(record.lastUpdate) >= cutoff;
-    return matchesRegime && matchesRelevance && matchesStatus && matchesDate;
+    return matchesRegime && matchesRelevance && matchesStatus && matchesRecordType && matchesDate;
   });
 }
 
-export function getSummary(items) {
-  const reference = dateValue(REFERENCE_DATE);
+export function getSummary(items, referenceDate = REFERENCE_DATE) {
+  const reference = dateValue(referenceDate);
   const nextThirtyDays = new Date(reference);
   nextThirtyDays.setDate(nextThirtyDays.getDate() + 30);
   const upcoming = items.filter((item) => {
@@ -322,19 +340,31 @@ export function getSummary(items) {
   };
 }
 
-export function getTrend(items) {
+export function getTrend(items, referenceDate = REFERENCE_DATE) {
+  const reference = dateValue(referenceDate);
+  const months = Array.from({ length: 6 }, (_, index) => {
+    const month = new Date(reference);
+    month.setDate(1);
+    month.setMonth(month.getMonth() - (5 - index));
+    return month;
+  });
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const series = { DORA: [], DGA: [], Other: [] };
-  TREND_MONTH_LABELS.forEach((_, monthIndex) => {
-    const month = monthIndex + 6;
+  months.forEach((month) => {
     Object.keys(series).forEach((regime) => {
       const count = items.filter((item) => {
         const itemDate = dateValue(item.lastUpdate);
-        return item.regime === regime && itemDate.getMonth() + 1 === month;
+        return item.regime === regime
+          && itemDate.getFullYear() === month.getFullYear()
+          && itemDate.getMonth() === month.getMonth();
       }).length;
       series[regime].push(count);
     });
   });
-  return { labels: TREND_MONTH_LABELS, series };
+  return {
+    labels: months.map((month) => bilingual(`${month.getMonth() + 1}月`, monthNames[month.getMonth()])),
+    series,
+  };
 }
 
 export function labelFor(options, value, language = 'zh') {

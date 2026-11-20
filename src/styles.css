@@ -130,6 +130,7 @@ h1 { margin-bottom: 9px; color: var(--ink); font-size: clamp(26px, 2.35vw, 34px)
 .action-topic small { color: #8792a2; font-size: 9px; font-weight: 620; }
 .action-detail { display: grid; gap: 1px; min-width: 0; color: #68758a; font-size: 9px; line-height: 1.35; }
 .action-detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.action-chips { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; min-width: 0; }
 .panel-empty { padding: 22px 4px 12px; color: var(--muted); font-size: 11px; }
 
 .source-registry-panel, .updates-panel { min-width: 0; }
@@ -160,6 +161,14 @@ h1 { margin-bottom: 9px; color: var(--ink); font-size: clamp(26px, 2.35vw, 34px)
 .regime-dora { color: #1e4b8f; background: var(--blue-soft); }
 .regime-dga { color: #147974; background: var(--teal-soft); }
 .regime-other { color: #5d6a7d; background: #ecf0f4; }
+.record-type-chip { display: inline-flex; align-items: center; max-width: 118px; height: 21px; padding: 0 7px; overflow: hidden; border-radius: 6px; color: #536278; background: #eef2f7; font-size: 9px; font-weight: 740; text-overflow: ellipsis; white-space: nowrap; }
+.record-type-designation { color: #315c97; background: #e6efff; }
+.record-type-annual-report { color: #6a4d93; background: #f0e9fb; }
+.record-type-guidance { color: #147974; background: #daf3ef; }
+.record-type-q-and-a { color: #8b5d19; background: #fff0d7; }
+.record-type-enforcement { color: #a13c4e; background: #fbe7eb; }
+.record-type-operational-theme { color: #536278; background: #eef2f7; }
+.record-type-other { color: #5d6a7d; background: #ecf0f4; }
 .status-chip { height: 23px; padding: 0 9px; border-radius: 7px; font-size: 10px; font-weight: 760; }
 .status-open { color: #925616; background: var(--amber-soft); }
 .status-review { color: #116f6a; background: var(--teal-soft); }
@@ -168,6 +177,9 @@ h1 { margin-bottom: 9px; color: var(--ink); font-size: clamp(26px, 2.35vw, 34px)
 .priority-high { color: #a25714; }
 .priority-medium { color: #6e7890; }
 .priority-low { color: #738092; }
+.freshness-chip { display: inline-flex; align-items: center; height: 19px; padding: 0 6px; border-radius: 5px; font-size: 9px; font-weight: 760; white-space: nowrap; }
+.freshness-current { color: #126a68; background: var(--teal-soft); }
+.freshness-stale { color: #9c5d12; background: var(--amber-soft); }
 
 .filter-bar { display: flex; align-items: flex-end; gap: 13px; padding: 16px 1px 12px; }
 .filter-heading { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; padding-bottom: 1px; color: #536278; font-size: 12px; font-weight: 760; }
@@ -182,14 +194,15 @@ h1 { margin-bottom: 9px; color: var(--ink); font-size: clamp(26px, 2.35vw, 34px)
 .evidence-panel { overflow: hidden; }
 .evidence-header { padding: 16px 16px 13px; border-bottom: 1px solid var(--line-soft); }
 .table-scroll { overflow-x: auto; }
-.evidence-table { width: 100%; min-width: 800px; border-collapse: collapse; table-layout: fixed; }
+.evidence-table { width: 100%; min-width: 920px; border-collapse: collapse; table-layout: fixed; }
 .evidence-table th { height: 38px; padding: 0 12px; color: #647187; background: #f3f6f9; font-size: 10px; font-weight: 780; text-align: left; white-space: nowrap; }
-.evidence-table th:nth-child(1) { width: 16%; }
-.evidence-table th:nth-child(2) { width: 27%; }
-.evidence-table th:nth-child(3) { width: 20%; }
-.evidence-table th:nth-child(4) { width: 14%; }
-.evidence-table th:nth-child(5) { width: 10%; }
-.evidence-table th:nth-child(6) { width: 13%; }
+.evidence-table th:nth-child(1) { width: 14%; }
+.evidence-table th:nth-child(2) { width: 15%; }
+.evidence-table th:nth-child(3) { width: 25%; }
+.evidence-table th:nth-child(4) { width: 17%; }
+.evidence-table th:nth-child(5) { width: 13%; }
+.evidence-table th:nth-child(6) { width: 8%; }
+.evidence-table th:nth-child(7) { width: 8%; }
 .evidence-table td { height: 50px; padding: 0 12px; border-top: 1px solid var(--line-soft); color: #35445b; font-size: 11px; vertical-align: middle; }
 .evidence-table tbody tr { position: relative; cursor: pointer; transition: background .15s ease; }
 .evidence-table tbody tr:hover { background: #f8fbff; }
@@ -198,6 +211,7 @@ h1 { margin-bottom: 9px; color: var(--ink); font-size: clamp(26px, 2.35vw, 34px)
 .topic-cell { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .topic-cell > span:last-child { overflow: hidden; color: #23314a; font-weight: 690; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
 .date-cell { color: #718096 !important; white-space: nowrap; }
+.date-cell .freshness-chip { margin-top: 3px; }
 .empty-state { display: grid; justify-items: center; gap: 6px; padding: 42px 20px; color: var(--muted); text-align: center; }
 .empty-state strong { color: #36455b; font-size: 13px; }
 .empty-state span { font-size: 11px; }
@@ -227,6 +241,13 @@ h1 { margin-bottom: 9px; color: var(--ink); font-size: clamp(26px, 2.35vw, 34px)
 .source-card strong { color: #27364c; font-size: 11px; }
 .source-card small { margin-top: 4px; color: #7b8798; font-size: 9px; }
 .source-card > svg { color: #1f56a6; }
+.review-gate-card { margin-top: 16px; padding: 11px 12px; border: 1px solid #ead9bd; border-radius: 8px; background: #fffaf1; }
+.review-gate-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 9px; color: #8b5d19; font-size: 10px; font-weight: 760; }
+.review-gate-heading strong { color: #9c5d12; font-size: 10px; }
+.review-gate-card p { margin: 7px 0 0; color: #76664d; font-size: 10px; line-height: 1.5; }
+.review-gate-card small { display: block; margin-top: 7px; color: #8a7a60; font-size: 9px; }
+.review-gate-reviewed { border-color: #b9ded8; background: #f2fbf9; }
+.review-gate-reviewed .review-gate-heading, .review-gate-reviewed .review-gate-heading strong { color: #126a68; }
 blockquote { margin: 10px 0 0; padding: 12px 12px 12px 15px; border-left: 3px solid #b8c5d6; border-radius: 0 7px 7px 0; color: #637086; background: #f1f4f7; font-size: 11px; font-style: italic; line-height: 1.55; }
 .review-log-empty { color: #8994a4 !important; font-size: 11px !important; }
 .review-log-list { display: grid; gap: 7px; }

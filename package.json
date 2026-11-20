@@ -10,6 +10,7 @@
     "dev": "vite",
     "snapshot": "node scripts/generate_snapshot.mjs",
     "records:snapshot": "node scripts/generate_records_snapshot.mjs",
+    "validate:records": "node scripts/validate_records.mjs",
     "prebuild": "npm run snapshot",
     "build": "vite build",
     "preview": "vite preview",

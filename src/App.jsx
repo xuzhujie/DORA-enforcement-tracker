@@ -40,14 +40,15 @@ function App() {
   ), [datasetRecords, reviewEntries]);
 
   const copy = UI[language];
+  const datasetReferenceDate = recordSnapshot.asOf || REFERENCE_DATE;
   const viewRecords = useMemo(() => datasetRecords.map((record) => ({
     ...record,
     reviewed: reviewedIds.has(record.id),
     status: reviewedIds.has(record.id) ? 'reviewed' : record.status,
   })), [datasetRecords, reviewedIds]);
-  const filteredRecords = useMemo(() => filterRecords(viewRecords, filters), [filters, viewRecords]);
-  const summary = useMemo(() => getSummary(filteredRecords), [filteredRecords]);
-  const trend = useMemo(() => getTrend(filteredRecords), [filteredRecords]);
+  const filteredRecords = useMemo(() => filterRecords(viewRecords, filters, datasetReferenceDate), [datasetReferenceDate, filters, viewRecords]);
+  const summary = useMemo(() => getSummary(filteredRecords, datasetReferenceDate), [datasetReferenceDate, filteredRecords]);
+  const trend = useMemo(() => getTrend(filteredRecords, datasetReferenceDate), [datasetReferenceDate, filteredRecords]);
   const selectedRecord = selectedId === null
     ? null
     : filteredRecords.find((record) => record.id === selectedId) || filteredRecords[0] || null;
@@ -112,15 +113,15 @@ function App() {
     let mimeType;
 
     if (format === 'json') {
-      content = buildJsonContent(filteredRecords, language, REFERENCE_DATE);
+      content = buildJsonContent(filteredRecords, language, datasetReferenceDate, recordSnapshot);
       filename = 'dora-enforcement-tracker.json';
       mimeType = 'application/json;charset=utf-8;';
     } else if (format === 'markdown') {
-      content = buildMarkdownContent(filteredRecords, language, REFERENCE_DATE);
+      content = buildMarkdownContent(filteredRecords, language, datasetReferenceDate, { ...recordSnapshot, datasetNotice: copy.datasetNotice[recordSnapshot.datasetStatus] || copy.datasetNotice.demo });
       filename = 'dora-enforcement-tracker.md';
       mimeType = 'text/markdown;charset=utf-8;';
     } else {
-      content = buildCsvContent(filteredRecords, language);
+      content = buildCsvContent(filteredRecords, language, { ...recordSnapshot, referenceDate: datasetReferenceDate });
       filename = 'dora-enforcement-tracker.csv';
       mimeType = 'text/csv;charset=utf-8;';
     }
@@ -171,7 +172,7 @@ function App() {
           <div className="topbar-title">
             <h1>{copy.pageTitle}</h1>
             <DemoNotice language={language} status={recordSnapshot.datasetStatus} />
-            <div className="freshness-line">{copy.dataFreshness} {formatLongDate(recordSnapshot.asOf || DATA_AS_OF, language)} · <a href="https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight" target="_blank" rel="noreferrer">{copy.officialSource}</a></div>
+            <div className="freshness-line">{copy.dataFreshness} {formatLongDate(datasetReferenceDate, language)} · <a href="https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight" target="_blank" rel="noreferrer">{copy.officialSource}</a></div>
           </div>
           <div className="topbar-actions">
             <div className="language-toggle" aria-label="Language">
@@ -199,17 +200,17 @@ function App() {
               <UpcomingActions items={summary.upcomingItems} onSelect={setSelectedId} language={language} />
             </div>
             <FilterBar filters={filters} onChange={updateFilter} onReset={resetFilters} language={language} />
-            <EvidenceTable items={filteredRecords} selectedId={selectedRecord?.id} onSelect={setSelectedId} language={language} />
+            <EvidenceTable items={filteredRecords} selectedId={selectedRecord?.id} onSelect={setSelectedId} referenceDate={datasetReferenceDate} language={language} />
             <div className="operations-grid">
               <SourceRegistryPanel sources={sourceRegistry} lastCheckedAt={sourceCheckedAt} language={language} />
               <UpdateFeed items={updateEvents} language={language} />
             </div>
             <footer className="page-footnote">
-              <span>{copy.footnote.referenceDate}: {formatLongDate(REFERENCE_DATE, language)}</span>
+              <span>{copy.footnote.referenceDate}: {formatLongDate(datasetReferenceDate, language)}</span>
               <span>{copy.footnote.scope}</span>
             </footer>
           </div>
-          <DetailPanel record={selectedRecord} onClear={() => setSelectedId(null)} onToggleReview={toggleReview} reviewEntries={reviewEntries} language={language} />
+          <DetailPanel record={selectedRecord} onClear={() => setSelectedId(null)} onToggleReview={toggleReview} reviewEntries={reviewEntries} datasetStatus={recordSnapshot.datasetStatus} datasetReview={recordSnapshot.review} reviewGate={recordSnapshot.reviewGate} referenceDate={datasetReferenceDate} language={language} />
         </div>
       </main>
 

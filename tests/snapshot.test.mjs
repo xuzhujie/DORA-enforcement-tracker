@@ -9,13 +9,18 @@ import { generateSnapshotHtml, writeSnapshot } from '../scripts/generate_snapsho
 
 test('generated snapshot covers every record and reconciles summary metrics', async () => {
   const template = await readFile(new URL('../public/static/index.html', import.meta.url), 'utf8');
-  const html = generateSnapshotHtml(template, records, REFERENCE_DATE);
+  const html = generateSnapshotHtml(template, records, REFERENCE_DATE, 'pending-review', {
+    zh: '待业务复核',
+    en: 'Business review pending',
+  });
   const summary = getSummary(records.map((record) => (record.reviewed ? { ...record, status: 'reviewed' } : record)));
 
   assert.equal((html.match(/data-record-id=/g) || []).length, records.length);
   assert.match(html, new RegExp(`snapshot:open-count:start -->${summary.open}<!-- snapshot:open-count:end`));
   assert.match(html, new RegExp(`snapshot:under-review-count:start -->${summary.underReview}<!-- snapshot:under-review-count:end`));
   assert.match(html, new RegExp(`snapshot:upcoming-count:start -->${summary.upcoming}<!-- snapshot:upcoming-count:end`));
+  assert.match(html, /Business review pending/);
+  assert.match(html, /运营主题/);
   assert.doesNotMatch(html, /__[A-Z_]+__/);
 });
 
@@ -50,10 +55,11 @@ test('snapshot writer uses the replaceable runtime records and dataset status', 
   const templatePath = join(directory, 'template.html');
   const outputPath = join(directory, 'snapshot.html');
   const dataPath = join(directory, 'records.json');
-  const template = '<main><!-- snapshot:dataset-notice:start -->old<!-- snapshot:dataset-notice:end --><!-- snapshot:date:start -->old<!-- snapshot:date:end --><!-- snapshot:open-count:start -->0<!-- snapshot:open-count:end --><!-- snapshot:under-review-count:start -->0<!-- snapshot:under-review-count:end --><!-- snapshot:upcoming-count:start -->0<!-- snapshot:upcoming-count:end --><!-- snapshot:rows:start -->old<!-- snapshot:rows:end --></main>';
+  const template = '<main><!-- snapshot:dataset-notice:start -->old<!-- snapshot:dataset-notice:end --><!-- snapshot:review-gate:start -->old<!-- snapshot:review-gate:end --><!-- snapshot:date:start -->old<!-- snapshot:date:end --><!-- snapshot:open-count:start -->0<!-- snapshot:open-count:end --><!-- snapshot:under-review-count:start -->0<!-- snapshot:under-review-count:end --><!-- snapshot:upcoming-count:start -->0<!-- snapshot:upcoming-count:end --><!-- snapshot:rows:start -->old<!-- snapshot:rows:end --></main>';
   const productionRecord = {
     ...records[0],
     id: 'production-001',
+    recordType: 'operational-theme',
     status: 'reviewed',
     reviewed: true,
     topic: { zh: '生产审核记录', en: 'Reviewed production record' },
@@ -64,6 +70,8 @@ test('snapshot writer uses the replaceable runtime records and dataset status', 
     await writeFile(dataPath, JSON.stringify({
       dataset_status: 'reviewed',
       as_of: '2026-12-01',
+      review_gate: 'Counsel reviewed',
+      review: { decision: 'approved', reviewer: 'Counsel', reviewedAt: '2026-12-01', notes: 'Approved for internal use.' },
       records: [productionRecord],
     }), 'utf8');
     await writeSnapshot({ template: templatePath, output: outputPath, data: dataPath });
@@ -72,6 +80,7 @@ test('snapshot writer uses the replaceable runtime records and dataset status', 
     assert.match(html, /data-record-id="production-001"/);
     assert.doesNotMatch(html, /data-record-id="dora-001"/);
     assert.match(html, /2026-12-01/);
+    assert.match(html, /Counsel reviewed/);
     assert.match(html, /数据已完成人工复核 · 不替代法律意见/);
   } finally {
     await rm(directory, { recursive: true, force: true });

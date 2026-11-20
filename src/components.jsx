@@ -1,5 +1,6 @@
-import { DATE_OPTIONS, PRIORITY_OPTIONS, REGIME_OPTIONS, RELEVANCE_OPTIONS, STATUS_OPTIONS, labelFor } from './data';
+import { DATE_OPTIONS, getRecordType, PRIORITY_OPTIONS, RECORD_TYPE_OPTIONS, REGIME_OPTIONS, RELEVANCE_OPTIONS, STATUS_OPTIONS, labelFor } from './data';
 import { formatDate, text, UI } from './copy';
+import { getRecordFreshness } from './recordSnapshot';
 
 export function Icon({ name, size = 18, strokeWidth = 1.8 }) {
   const common = {
@@ -42,6 +43,18 @@ export function StatusChip({ status, language = 'zh' }) {
 export function RegimeChip({ regime, language = 'zh' }) {
   const className = regime === 'DORA' ? 'regime-dora' : regime === 'DGA' ? 'regime-dga' : 'regime-other';
   return <span className={`regime-chip ${className}`}>{labelFor(REGIME_OPTIONS, regime, language)}</span>;
+}
+
+export function RecordTypeChip({ recordType, language = 'zh' }) {
+  const normalized = getRecordType({ recordType });
+  const className = normalized === 'enforcement-case' ? 'record-type-enforcement' : `record-type-${normalized.replaceAll('_', '-')}`;
+  return <span className={`record-type-chip ${className}`}>{labelFor(RECORD_TYPE_OPTIONS, normalized, language)}</span>;
+}
+
+export function FreshnessChip({ record, referenceDate, language = 'zh' }) {
+  const freshness = getRecordFreshness(record, referenceDate);
+  const label = freshness.stale ? UI[language].freshness.stale : UI[language].freshness.current;
+  return <span className={`freshness-chip ${freshness.stale ? 'freshness-stale' : 'freshness-current'}`}>{label}</span>;
 }
 
 export function PriorityLabel({ priority, language = 'zh' }) {
@@ -152,7 +165,7 @@ export function UpcomingActions({ items, onSelect, language = 'zh' }) {
                 <span>{copy.businessImpact}: {text(item.businessImpact, language)}</span>
               </span>
             </div>
-            <RegimeChip regime={item.regime} language={language} />
+            <div className="action-chips"><RegimeChip regime={item.regime} language={language} /><RecordTypeChip recordType={item.recordType} language={language} /></div>
           </button>
         ))}
         {items.length === 0 && <div className="panel-empty">{copy.empty}</div>}
@@ -223,6 +236,7 @@ export function FilterBar({ filters, onChange, onReset, language = 'zh' }) {
     { key: 'regime', label: copy.regime, options: REGIME_OPTIONS },
     { key: 'relevance', label: copy.relevance, options: RELEVANCE_OPTIONS },
     { key: 'status', label: copy.status, options: STATUS_OPTIONS },
+    { key: 'recordType', label: copy.recordType, options: RECORD_TYPE_OPTIONS },
     { key: 'dateRange', label: copy.dateRange, options: DATE_OPTIONS },
   ];
 
@@ -245,7 +259,7 @@ export function FilterBar({ filters, onChange, onReset, language = 'zh' }) {
   );
 }
 
-export function EvidenceTable({ items, selectedId, onSelect, language = 'zh' }) {
+export function EvidenceTable({ items, selectedId, onSelect, referenceDate, language = 'zh' }) {
   const copy = UI[language].evidence;
   return (
     <section className="evidence-panel" id="evidence" aria-labelledby="evidence-title">
@@ -261,6 +275,7 @@ export function EvidenceTable({ items, selectedId, onSelect, language = 'zh' }) 
           <thead>
             <tr>
               <th scope="col">{copy.source}</th>
+              <th scope="col">{copy.recordType}</th>
               <th scope="col">{copy.topic}</th>
               <th scope="col">{copy.affectedParty}</th>
               <th scope="col">{copy.status}</th>
@@ -284,11 +299,12 @@ export function EvidenceTable({ items, selectedId, onSelect, language = 'zh' }) 
                 aria-selected={item.id === selectedId}
               >
                 <td><span className="source-cell">{text(item.source, language)}</span></td>
+                <td><RecordTypeChip recordType={item.recordType} language={language} /></td>
                 <td><div className="topic-cell"><RegimeChip regime={item.regime} language={language} /><span>{text(item.topic, language)}</span></div></td>
                 <td>{text(item.affectedParty, language)}</td>
                 <td><StatusChip status={item.status} language={language} /></td>
                 <td><PriorityLabel priority={item.priority} language={language} /></td>
-                <td className="date-cell">{formatDate(item.lastUpdate, language)}</td>
+                <td className="date-cell"><span>{formatDate(item.lastUpdate, language)}</span>{getRecordFreshness(item, referenceDate).stale && <FreshnessChip record={item} referenceDate={referenceDate} language={language} />}</td>
               </tr>
             ))}
           </tbody>
@@ -305,7 +321,7 @@ export function EvidenceTable({ items, selectedId, onSelect, language = 'zh' }) 
   );
 }
 
-export function DetailPanel({ record, onClear, onToggleReview, reviewEntries = [], language = 'zh' }) {
+export function DetailPanel({ record, onClear, onToggleReview, reviewEntries = [], datasetStatus = 'demo', datasetReview = null, reviewGate = null, referenceDate, language = 'zh' }) {
   const copy = UI[language].detail;
   const actions = UI[language].actions;
   if (!record) {
@@ -325,17 +341,25 @@ export function DetailPanel({ record, onClear, onToggleReview, reviewEntries = [
         <button className="icon-button" type="button" onClick={onClear} aria-label={copy.close} title={copy.close}><Icon name="close" size={18} /></button>
       </div>
       <div className="detail-body">
-        <div className="detail-title-row"><RegimeChip regime={record.regime} language={language} /><span className="detail-id">{record.id}</span></div>
+        <div className="detail-title-row"><RegimeChip regime={record.regime} language={language} /><RecordTypeChip recordType={record.recordType} language={language} /><span className="detail-id">{record.id}</span></div>
         <h2 id="detail-title">{text(record.topic, language)}</h2>
         <div className="detail-facts">
           <Fact label={copy.regime} value={<RegimeChip regime={record.regime} language={language} />} />
+          <Fact label={copy.recordType} value={<RecordTypeChip recordType={record.recordType} language={language} />} />
           <Fact label={copy.relevance} value={labelFor(RELEVANCE_OPTIONS, record.relevance, language)} />
           <Fact label={copy.status} value={<StatusChip status={record.status} language={language} />} />
           <Fact label={copy.priority} value={<PriorityLabel priority={record.priority} language={language} />} />
           <Fact label={copy.lastUpdate} value={formatDate(record.lastUpdate, language)} />
           <Fact label={copy.dueDate} value={formatDate(record.dueDate, language)} />
           <Fact label={copy.verifiedAt} value={formatDate(record.lastVerifiedAt, language)} />
+          <Fact label={copy.freshness} value={<FreshnessChip record={record} referenceDate={referenceDate} language={language} />} />
           <Fact label={copy.owner} value={text(record.owner, language)} />
+        </div>
+        <div className={`review-gate-card review-gate-${datasetStatus}`}>
+          <div className="review-gate-heading"><span>{copy.reviewGate}</span><strong>{datasetStatus === 'reviewed' ? copy.reviewApproved : copy.reviewPending}</strong></div>
+          {reviewGate && <p>{text(reviewGate, language)}</p>}
+          {datasetReview?.reviewer && <small>{copy.reviewer}: {datasetReview.reviewer} · {copy.reviewedAt}: {formatDate(datasetReview.reviewedAt, language)}</small>}
+          {datasetReview?.notes && <small>{text(datasetReview.notes, language)}</small>}
         </div>
         <div className="detail-section">
           <h3>{copy.summary}</h3>
