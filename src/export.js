@@ -40,7 +40,7 @@ export function buildMarkdownContent(items, language = 'zh', referenceDate = '20
     `| ${headers.map(() => '---').join(' | ')} |`,
     ...rows.map((row) => `| ${row.map((cell) => String(cell).replaceAll('|', '\\|')).join(' | ')} |`),
     '',
-    `> ${copy.demoNotice}`,
+    `> ${copy.datasetNotice.demo}`,
   ].join('\n');
 }
 

@@ -129,7 +129,7 @@ export function TrendChart({ trend, language = 'zh' }) {
   );
 }
 
-export function UpcomingActions({ items, language = 'zh' }) {
+export function UpcomingActions({ items, onSelect, language = 'zh' }) {
   const copy = UI[language].upcoming;
   return (
     <section className="panel actions-panel" aria-labelledby="actions-title">
@@ -142,14 +142,18 @@ export function UpcomingActions({ items, language = 'zh' }) {
       </div>
       <div className="action-list">
         {items.slice(0, 4).map((item) => (
-          <div className="action-row" key={item.id}>
+          <button className="action-row" key={item.id} type="button" onClick={() => onSelect?.(item.id)}>
             <time dateTime={item.dueDate}>{formatDate(item.dueDate, language)}</time>
             <div className="action-topic">
               <strong>{text(item.topic, language)}</strong>
               <small>{copy.owner}: {text(item.owner, language)}</small>
+              <span className="action-detail">
+                <span>{copy.nextAction}: {text(item.nextAction, language)}</span>
+                <span>{copy.businessImpact}: {text(item.businessImpact, language)}</span>
+              </span>
             </div>
             <RegimeChip regime={item.regime} language={language} />
-          </div>
+          </button>
         ))}
         {items.length === 0 && <div className="panel-empty">{copy.empty}</div>}
       </div>
@@ -401,6 +405,7 @@ function Fact({ label, value }) {
   return <div className="fact-row"><span>{label}</span><strong>{value}</strong></div>;
 }
 
-export function DemoNotice({ language = 'zh' }) {
-  return <div className="demo-notice"><span className="demo-dot" />{UI[language].demoNotice}</div>;
+export function DemoNotice({ language = 'zh', status = 'demo' }) {
+  const notice = UI[language].datasetNotice[status] || UI[language].datasetNotice.demo;
+  return <div className="demo-notice"><span className={`demo-dot dataset-dot-${status}`} />{notice}</div>;
 }

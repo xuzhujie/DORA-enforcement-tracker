@@ -3,6 +3,7 @@ import { DATA_AS_OF, DEFAULT_FILTERS, REFERENCE_DATE, records, filterRecords, ge
 import { buildCsvContent, buildJsonContent, buildMarkdownContent } from './export';
 import { formatLongDate, getStoredLanguage, LANGUAGE_LABELS, UI } from './copy';
 import { sourceRegistry } from './sourceRegistry';
+import { normalizeRecordSnapshot } from './recordSnapshot';
 import { appendReviewEntry, applyReviewEntries, createReviewEntry, readReviewLog, writeReviewLog } from './reviewLog';
 import { initialUpdateEvents, normalizeUpdateEvent } from './updates';
 import {
@@ -29,18 +30,21 @@ function App() {
   const [reviewEntries, setReviewEntries] = useState(() => readReviewLog());
   const [updateEvents, setUpdateEvents] = useState(initialUpdateEvents);
   const [sourceCheckedAt, setSourceCheckedAt] = useState(DATA_AS_OF);
+  const [recordSnapshot, setRecordSnapshot] = useState(() => normalizeRecordSnapshot(null, records));
+
+  const datasetRecords = recordSnapshot.records;
 
   const reviewedIds = useMemo(() => applyReviewEntries(
-    new Set(records.filter((record) => record.reviewed).map((record) => record.id)),
+    new Set(datasetRecords.filter((record) => record.reviewed).map((record) => record.id)),
     reviewEntries,
-  ), [reviewEntries]);
+  ), [datasetRecords, reviewEntries]);
 
   const copy = UI[language];
-  const viewRecords = useMemo(() => records.map((record) => ({
+  const viewRecords = useMemo(() => datasetRecords.map((record) => ({
     ...record,
     reviewed: reviewedIds.has(record.id),
     status: reviewedIds.has(record.id) ? 'reviewed' : record.status,
-  })), [reviewedIds]);
+  })), [datasetRecords, reviewedIds]);
   const filteredRecords = useMemo(() => filterRecords(viewRecords, filters), [filters, viewRecords]);
   const summary = useMemo(() => getSummary(filteredRecords), [filteredRecords]);
   const trend = useMemo(() => getTrend(filteredRecords), [filteredRecords]);
@@ -56,6 +60,15 @@ function App() {
 
   useEffect(() => {
     let active = true;
+    fetch(`${import.meta.env.BASE_URL}data/records.json`)
+      .then((response) => (response.ok ? response.json() : null))
+      .then((snapshot) => {
+        if (!active || !snapshot) return;
+        setRecordSnapshot(normalizeRecordSnapshot(snapshot, records));
+      })
+      .catch(() => {
+        // Keep the built-in fallback dataset when the production snapshot is unavailable.
+      });
     fetch(`${import.meta.env.BASE_URL}data/updates.json`)
       .then((response) => (response.ok ? response.json() : null))
       .then((snapshot) => {
@@ -157,8 +170,8 @@ function App() {
         <header className="topbar">
           <div className="topbar-title">
             <h1>{copy.pageTitle}</h1>
-            <DemoNotice language={language} />
-            <div className="freshness-line">{copy.dataFreshness} {formatLongDate(DATA_AS_OF, language)} · <a href="https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight" target="_blank" rel="noreferrer">{copy.officialSource}</a></div>
+            <DemoNotice language={language} status={recordSnapshot.datasetStatus} />
+            <div className="freshness-line">{copy.dataFreshness} {formatLongDate(recordSnapshot.asOf || DATA_AS_OF, language)} · <a href="https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight" target="_blank" rel="noreferrer">{copy.officialSource}</a></div>
           </div>
           <div className="topbar-actions">
             <div className="language-toggle" aria-label="Language">
@@ -183,7 +196,7 @@ function App() {
             <SummaryBand summary={summary} language={language} />
             <div className="insight-grid">
               <TrendChart trend={trend} language={language} />
-              <UpcomingActions items={summary.upcomingItems} language={language} />
+              <UpcomingActions items={summary.upcomingItems} onSelect={setSelectedId} language={language} />
             </div>
             <FilterBar filters={filters} onChange={updateFilter} onReset={resetFilters} language={language} />
             <EvidenceTable items={filteredRecords} selectedId={selectedRecord?.id} onSelect={setSelectedId} language={language} />

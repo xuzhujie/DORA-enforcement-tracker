@@ -13,7 +13,8 @@
 
 - 主看板：KPI、按筛选联动的趋势、未来 30 天行动、证据表和详情面板。
 - 双语：界面、状态/筛选标签、记录字段、日期格式和 CSV/JSON/Markdown 导出均支持中文/英文。
-- 交付快照：`/static/index.html` 是可打印/可分享的静态快照，不依赖 React 运行时。
+- 交付快照：`/static/index.html` 是从 `public/data/records.json` 生成的可打印/可分享静态快照，不依赖 React 运行时；数据快照异常时会回退到内置数据。
+- 数据交接：`public/data/records.json` 是可替换的数据快照；当前 `dataset_status` 为 `demo`，替换为生产数据前必须完成业务负责人/法务人工复核。
 - 官方来源监测：`scripts/check_updates.py` 对 EBA DORA 页面做哈希变更检测，并写入 `public/data/updates.json`；只产生待人工核验的来源更新，不自动推断法律结论。
 - 来源与复核：来源登记表区分 DORA 官方监测源与 DGA 次级范围；更新事件只进入人工复核闸门，详情面板会把本地复核动作记录到浏览器存储。
 - CI/部署：GitHub Actions 定时检查来源，Pages 构建前运行 JavaScript/Python 测试、Playwright 烟测、lint 和生产构建。
@@ -32,6 +33,8 @@ npm test
 python3 -m unittest discover -s tests -v
 npm run lint
 npm run build
+npm run records:snapshot
+npm run snapshot
 npx playwright install chromium
 npm run test:e2e
 ```
@@ -44,11 +47,11 @@ python3 scripts/check_updates.py
 
 监测脚本默认从官方页面抓取 HTML，只在内容 hash 变化时更新 `public/data/updates.json`。真实接入时仍需人工复核来源、适用性、业务影响和下一步动作。
 
+生产数据交接：先复制当前 `public/data/records.json` 作为结构模板，逐条替换 `records`，保留双语字段、官方 `sourceUrl`、`evidenceExcerpt`、`lastVerifiedAt`、`owner`、`nextAction` 和 `businessImpact`。只有在完成业务负责人/法务复核后，才将 `dataset_status` 改为 `reviewed`；不确定的记录使用 `pending-review`，不要把页面 hash 自动升级为法律结论。`npm run records:snapshot` 只用于重新生成 demo 种子；正常 `npm run build` 不会覆盖这份可替换快照。
+
 ## 发布闭环 / Publish loop
 
-1. 在 GitHub 创建或指定一个空仓库，并把本地仓库 remote 命名为 `origin`。
-2. 推送 `main` 分支；`Build and deploy tracker` 会构建并发布 GitHub Pages。
-3. `Monitor official DORA sources` 每日检查官方 EBA 页面；检测到更新后只提交 `public/data/updates.json`，随后由 `workflow_run` 触发 Pages 构建。
-4. 首次发布前在仓库 Settings → Pages 中确认 Source 使用 GitHub Actions；不要把演示记录当作真实执法统计。
-
-当前工作区没有预设 GitHub remote，因此本地初始化与实际推送分开处理；拿到目标仓库地址后再执行 `git remote add origin ...` 与 `git push`。
+1. 推送 `main` 分支；`Build and deploy tracker` 会运行全套测试并发布 GitHub Pages。
+2. `Monitor official DORA sources` 每日检查官方 EBA 页面；检测到更新后只提交 `public/data/updates.json`，随后由 `workflow_run` 触发 Pages 构建。
+3. 首次发布前在仓库 Settings → Pages 中确认 Source 使用 GitHub Actions；当前公开看板地址为 <https://xuzhujie.github.io/DORA-enforcement-tracker/>。
+4. 不要把演示记录当作真实执法统计；替换 `records.json` 后先在看板中确认双语、筛选、行动和详情链路，再提交发布。

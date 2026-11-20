@@ -26,6 +26,31 @@ test('desktop flow supports bilingual filtering, review, sources, and updates', 
   await expect(page.getByRole('heading', { name: 'Review history' })).toBeVisible();
 });
 
+test('upcoming actions expose delivery impact and open the matching detail', async ({ page }) => {
+  await page.goto('/');
+
+  const firstAction = page.locator('.action-row').first();
+  await expect(firstAction).toContainText('确认重大 ICT 事件分类与升级路径是否留痕。');
+  await expect(firstAction).toContainText('影响事件分级、通知时限和客户沟通证据。');
+  await firstAction.click();
+
+  await expect(page.getByRole('heading', { name: '重大 ICT 事件报告' })).toBeVisible();
+  await expect(page.locator('.detail-panel').getByText('确认重大 ICT 事件分类与升级路径是否留痕。', { exact: true })).toBeVisible();
+});
+
+test('english upcoming actions keep localized delivery copy and detail', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'EN' }).click();
+
+  const firstAction = page.locator('.action-row').first();
+  await expect(firstAction).toContainText('Confirm that major ICT incident classification and escalation paths are evidenced.');
+  await expect(firstAction).toContainText('Affects incident severity, notification timelines, and customer-communication evidence.');
+  await firstAction.click();
+
+  await expect(page.getByRole('heading', { name: 'Major ICT-related incident reporting' })).toBeVisible();
+  await expect(page.locator('.detail-panel').getByText('Confirm that major ICT incident classification and escalation paths are evidenced.', { exact: true })).toBeVisible();
+});
+
 test('mobile trend chart stays within the viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');

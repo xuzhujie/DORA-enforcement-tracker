@@ -65,6 +65,8 @@ h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 9px; color: var(--ink); font-size: clamp(26px, 2.35vw, 34px); line-height: 1.08; letter-spacing: -0.045em; }
 .demo-notice { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; line-height: 1.4; }
 .demo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 3px rgba(217, 138, 39, .13); }
+.dataset-dot-pending-review { background: var(--amber); }
+.dataset-dot-reviewed { background: var(--teal); box-shadow: 0 0 0 3px rgba(15, 141, 135, .13); }
 .freshness-line { margin-top: 8px; color: #8591a2; font-size: 10px; line-height: 1.45; }
 .freshness-line a { color: #315c97; font-weight: 700; text-decoration: none; }
 .freshness-line a:hover { text-decoration: underline; }
@@ -118,12 +120,16 @@ h1 { margin-bottom: 9px; color: var(--ink); font-size: clamp(26px, 2.35vw, 34px)
 .chart-x-label, .chart-y-label { fill: #8b96a6; font-size: 10px; }
 .panel-count, .row-count { color: #7a879a; font-size: 11px; font-weight: 700; }
 .action-list { display: grid; margin-top: 13px; }
-.action-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: center; gap: 9px; min-height: 39px; border-top: 1px solid var(--line-soft); }
+.action-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: start; width: 100%; min-height: 39px; padding: 9px 0; border: 0; border-top: 1px solid var(--line-soft); color: inherit; background: transparent; text-align: left; }
+.action-row:hover { background: #f8fbff; }
+.action-row:focus-visible { position: relative; z-index: 1; }
 .action-row time { color: #5d6e84; font-size: 10px; font-weight: 700; }
 .action-topic { display: grid; min-width: 0; gap: 2px; overflow: hidden; }
 .action-topic strong, .action-topic small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .action-topic strong { color: #233149; font-size: 11px; font-weight: 650; }
 .action-topic small { color: #8792a2; font-size: 9px; font-weight: 620; }
+.action-detail { display: grid; gap: 1px; min-width: 0; color: #68758a; font-size: 9px; line-height: 1.35; }
+.action-detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .panel-empty { padding: 22px 4px 12px; color: var(--muted); font-size: 11px; }
 
 .source-registry-panel, .updates-panel { min-width: 0; }

@@ -21,7 +21,11 @@ export const UI = {
       supplyChain: '关键 ICT 供应链',
       dga: 'DGA 仅在数据中介或相关非个人数据出境场景单列',
     },
-    demoNotice: '演示数据 · 仅用于界面与流程验证，不代表真实执法统计',
+    datasetNotice: {
+      demo: '演示数据 · 仅用于界面与流程验证，不代表真实执法统计',
+      'pending-review': '数据待人工复核 · 不用于法律结论',
+      reviewed: '数据已完成人工复核 · 不替代法律意见',
+    },
     dataFreshness: '数据核验截至',
     officialSource: '官方监管入口',
     actions: {
@@ -58,6 +62,8 @@ export const UI = {
       title: '即将行动',
       subtitle: '未来 30 天内需要跟进的事项',
       owner: '责任人',
+      nextAction: '下一步',
+      businessImpact: '影响',
       empty: '当前筛选没有待排期事项',
     },
     sources: {
@@ -152,7 +158,11 @@ export const UI = {
       supplyChain: 'Critical ICT supply chain',
       dga: 'DGA is separated only for data intermediaries or relevant non-personal data transfers',
     },
-    demoNotice: 'Demo data · for interface and workflow validation only; not real enforcement statistics',
+    datasetNotice: {
+      demo: 'Demo data · for interface and workflow validation only; not real enforcement statistics',
+      'pending-review': 'Dataset pending human review · not for legal conclusions',
+      reviewed: 'Dataset human-reviewed · not a substitute for legal advice',
+    },
     dataFreshness: 'Data verified through',
     officialSource: 'Official regulatory entry point',
     actions: {
@@ -189,6 +199,8 @@ export const UI = {
       title: 'Upcoming actions',
       subtitle: 'Items requiring follow-up in the next 30 days',
       owner: 'Owner',
+      nextAction: 'Next action',
+      businessImpact: 'Impact',
       empty: 'No scheduled actions match the current filters',
     },
     sources: {
