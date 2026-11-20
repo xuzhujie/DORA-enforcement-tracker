@@ -77,5 +77,5 @@
 
 - [x] Run JS tests, Python tests, lint, build, Playwright smoke, audits, and `git diff --check`.
 - [x] Run the local dashboard through the available Playwright browser flow and verify the action-to-detail interaction in Chinese and English.
-- [ ] Commit and push the completed operational hardening changes.
-- [ ] Verify GitHub Actions build/deploy and the public Pages URL.
+- [x] Commit and push the completed operational hardening changes.
+- [x] Verify GitHub Actions build/deploy and the public Pages URL.
