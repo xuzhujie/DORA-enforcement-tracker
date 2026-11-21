@@ -1,8 +1,30 @@
 {
-  "updated_at": "2026-11-20",
-  "last_checked_at": "2026-11-20",
+  "updated_at": "2026-11-21",
+  "last_checked_at": "2026-11-21",
   "source": "EBA DORA official pages",
   "items": [
+    {
+      "title": "Digital Operational Resilience Act | European Banking Authority",
+      "title_zh": "EBA DORA 监管入口",
+      "summary": "The official EBA DORA activity and oversight page changed.",
+      "summary_zh": "EBA DORA 官方活动与监管入口页面有更新。",
+      "summary_en": "The official EBA DORA activity and oversight page changed.",
+      "link": "https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act",
+      "date": "2026-11-21",
+      "source": "EBA",
+      "source_hash": "0b3f65b9eb6cb77f56fcd75a2c16b693448bc441919eb0f26becdf8e5c40fee2"
+    },
+    {
+      "title": "DORA oversight | European Banking Authority",
+      "title_zh": "EBA DORA 监督入口",
+      "summary": "The official EBA DORA oversight page changed; review whether applicability or action items are affected.",
+      "summary_zh": "EBA DORA 监督页面有更新，需人工核对是否影响适用性或行动项。",
+      "summary_en": "The official EBA DORA oversight page changed; review whether applicability or action items are affected.",
+      "link": "https://www.eba.europa.eu/activities/direct-supervision-and-oversight/digital-operational-resilience-act/dora-oversight",
+      "date": "2026-11-21",
+      "source": "EBA",
+      "source_hash": "886f6da82a4352e3da1a23595cebafc1702379d525df6b02b2b64ea2bb4cf0b3"
+    },
     {
       "title": "Digital Operational Resilience Act | European Banking Authority",
       "title_zh": "EBA DORA 监管入口",
