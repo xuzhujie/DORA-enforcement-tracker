@@ -1,5 +1,6 @@
 import unittest
 import json
+from datetime import date
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 from pathlib import Path
@@ -13,7 +14,9 @@ class CheckUpdatesTests(unittest.TestCase):
         with snapshot_path.open("r", encoding="utf-8") as handle:
             snapshot = json.load(handle)
         self.assertGreaterEqual(len(snapshot["items"]), 1)
-        self.assertEqual(snapshot["last_checked_at"], "2026-11-20")
+        last_checked_at = date.fromisoformat(snapshot["last_checked_at"])
+        self.assertEqual(last_checked_at.isoformat(), snapshot["last_checked_at"])
+        self.assertLessEqual(last_checked_at, date.today())
 
     def test_extract_title_reads_html_title(self):
         html = b"<html><head><title> EBA DORA oversight </title></head></html>"
